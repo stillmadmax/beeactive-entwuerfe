@@ -9,6 +9,11 @@
   --muted:#6F6357;
   --rose:#A87A70;
   --deep:#3A2E26;
+  /* Status der Termine. Gedeckte Töne, damit sie neben Rosé und Sand nicht
+     schreien, aber kräftig genug, um sich vom Grau der Nebentexte abzuheben. */
+  --gruen:#3F7A46;
+  --bernstein:#8A5E10;
+  --rot:#B23B2E;
   --max:1160px;
 }
 *{box-sizing:border-box}
@@ -86,18 +91,40 @@ img{display:block;max-width:100%}
 .pagehead .h1{max-width:16ch}
 .termine{display:grid;gap:14px}
 .termin{background:#fff;border:1px solid rgba(217,196,174,0.7);border-radius:20px;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.termin.is-off{opacity:0.55}
+/* Nur die Ausnahmen bekommen einen farbigen Grund: abgesagt zart rot, vor Ort
+   ausgebucht zart bernstein. Der Normalfall „Platz frei" bleibt weiß, sonst
+   leuchtet die ganze Liste und die Ausnahme fällt nicht mehr auf. */
+.termin.is-off{background:#FBF0EE;border-color:rgba(178,59,46,0.22)}
+.termin.is-off .wann{opacity:0.65}
+.termin.is-online{background:#FAF5EA;border-color:rgba(138,94,16,0.22)}
 .termin .wann{font-family:'Lora',Georgia,serif;font-size:20px;font-weight:500}
 .termin .wo{color:var(--muted);font-size:15px;margin-top:2px}
 .optionen{display:flex;gap:8px;flex-wrap:wrap}
 .opt{border:1px solid var(--clay);background:transparent;border-radius:999px;padding:9px 18px;font-size:15px;font-family:inherit;color:var(--ink);cursor:pointer}
 .opt:hover{border-color:var(--rose)}
 .opt.is-on{background:var(--rose);border-color:var(--rose);color:#fff}
+/* Abgesagte Mittwoche stehen in der Auswahl mit drin, sonst fehlt in der Reihe
+   ein Datum und man fragt sich, warum. Wählbar sind sie nicht. Die Klasse ist
+   nötig, weil der Mockup-Renderer das disabled-Attribut nicht mit ausgibt; in
+   der gebauten Seite trägt der Button beides.
+   Vor Ort ausgebuchte Mittwoche bleiben wählbar, dort ist dann nur noch Online
+   möglich. Deshalb sind sie gekennzeichnet, aber nicht gesperrt. */
+.opt[disabled]{cursor:default}
+.opt.is-voll{color:var(--bernstein);border-color:rgba(138,94,16,0.45)}
+.opt.is-voll:hover{border-color:var(--bernstein)}
+.opt.is-aus{color:var(--rot);border-color:rgba(178,59,46,0.3);text-decoration:line-through}
+.opt.is-aus:hover{border-color:rgba(178,59,46,0.3)}
 .feld{display:grid;gap:7px;margin-bottom:18px}
 .feld label{font-size:15px;color:var(--muted)}
 .feld input{font:inherit;font-size:17px;padding:14px 16px;border:1px solid var(--clay);border-radius:14px;background:#fff;color:var(--ink);width:100%}
 .feld input:focus{outline:2px solid var(--rose);outline-offset:1px;border-color:var(--rose)}
 .hinweis{font-size:15px;color:var(--muted)}
+/* Terminstatus als hinterlegte Pille, in derselben Form wie die Auswahlpillen
+   im Formular: frei, ausgebucht, abgesagt. */
+.status{display:inline-block;border-radius:999px;padding:6px 15px;font-size:14px;font-weight:500;border:1px solid;white-space:nowrap}
+.status.frei{color:var(--gruen);background:rgba(63,122,70,0.10);border-color:rgba(63,122,70,0.3)}
+.status.voll{color:var(--bernstein);background:rgba(138,94,16,0.10);border-color:rgba(138,94,16,0.3)}
+.status.aus{color:var(--rot);background:rgba(178,59,46,0.09);border-color:rgba(178,59,46,0.28)}
 /* Aufklappbare Wochen fünf bis acht */
 .mehr{margin-top:14px}
 .mehr summary{display:block;cursor:pointer;color:var(--rose);font-size:16px;padding:14px 0}
@@ -143,6 +170,8 @@ img{display:block;max-width:100%}
   .footlinks{gap:14px 20px}
   .termin{flex-direction:column;align-items:stretch;gap:14px}
   .termin .btn{width:100%}
+  /* Die Statuspille bleibt so breit wie ihr Text, statt über die Karte zu laufen. */
+  .termin .status{align-self:flex-start}
   /* Buttons, die mobil dasselbe sagen wie die Sticky-Leiste */
   .nur-desktop{display:none}
   /* Seiten ohne Sticky-Leiste (z. B. Anmelden) */

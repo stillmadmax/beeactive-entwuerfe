@@ -47,15 +47,7 @@
                   <div class="wann">{{ t.wann }}</div>
                   <div class="wo">{{ t.wo }}</div>
                 </div>
-                <sc-if value="{{ t.abgesagt }}">
-                  <div class="hinweis">Abgesagt</div>
-                </sc-if>
-                <sc-if value="{{ t.offen }}">
-                  <div class="optionen">
-                    <button class="{{ t.vorOrt }}" type="button">Vor Ort</button>
-                    <button class="opt" type="button">Online</button>
-                  </div>
-                </sc-if>
+                <div class="{{ t.statusCls }}">{{ t.status }}</div>
               </div>
             </sc-for>
           </div>
@@ -71,21 +63,12 @@
                     <div class="wann">{{ t.wann }}</div>
                     <div class="wo">{{ t.wo }}</div>
                   </div>
-                  <sc-if value="{{ t.abgesagt }}">
-                    <div class="hinweis">Abgesagt</div>
-                  </sc-if>
-                  <sc-if value="{{ t.offen }}">
-                    <div class="optionen">
-                      <button class="opt" type="button">Vor Ort</button>
-                      <button class="opt" type="button">Online</button>
-                    </div>
-                  </sc-if>
+                  <div class="{{ t.statusCls }}">{{ t.status }}</div>
                 </div>
               </sc-for>
             </div>
           </details>
           <p class="hinweis" style="margin:20px 0 0">
-            Online-Teilnahme: Den Zoom-Link bekommst du mit der Bestätigungsmail.
             Anmelden kannst du dich bis 18:30 Uhr am Kurstag, dann weiß ich rechtzeitig, wer dabei ist.
           </p>
         </div>
@@ -95,8 +78,8 @@
             <div class="two" style="align-items:start">
               <div>
                 <div class="eyebrow">Deine Anmeldung</div>
-                <h2 class="serif h2" style="margin:14px 0 6px">{{ formularTitel }}</h2>
-                <p class="hinweis" style="margin:0 0 26px">19 Euro oder Wellpass · 60 Minuten · Platz frei</p>
+                <h2 class="serif h2" style="margin:14px 0 6px">Melde dich an</h2>
+                <p class="hinweis" style="margin:0 0 26px">19 Euro oder Wellpass · 60 Minuten</p>
 
                 <div class="feld">
                   <label for="name">Name</label>
@@ -105,6 +88,28 @@
                 <div class="feld">
                   <label for="mail">E-Mail</label>
                   <input id="mail" type="email" placeholder="für die Bestätigung" />
+                </div>
+                <div class="feld">
+                  <label>Welcher Mittwoch?</label>
+                  <div class="optionen" style="margin-top:8px">
+                    <sc-for list="{{ pillen }}" as="t">
+                      <sc-if value="{{ t.offen }}">
+                        <button class="{{ t.pille }}" type="button">{{ t.kurz }}</button>
+                      </sc-if>
+                      <sc-if value="{{ t.zu }}">
+                        <button class="{{ t.pille }}" type="button" disabled>{{ t.kurz }}</button>
+                      </sc-if>
+                    </sc-for>
+                  </div>
+                </div>
+                <div class="feld">
+                  <label>Vor Ort oder online?</label>
+                  <div class="optionen" style="margin-top:8px">
+                    <button class="opt is-on" type="button">Vor Ort</button>
+                    <button class="opt" type="button">Online</button>
+                  </div>
+                  <p class="hinweis" style="margin:10px 0 0">Den Zoom-Link bekommst du mit der Bestätigungsmail.
+                    An ausgebuchten Mittwochen bleibt nur Online wählbar, über Zoom ist immer Platz.</p>
                 </div>
                 <div class="feld">
                   <label>Wie zahlst du?</label>
@@ -126,7 +131,7 @@
                   <li><span class="tick"></span><span>In derselben Mail ist ein Abmeldelink. Ein Klick, fertig, kein Konto nötig.</span></li>
                   <li><span class="tick"></span><span>Am Vortag kommt eine kurze Erinnerung.</span></li>
                   <li><span class="tick"></span><span>In der Mail steht die PayPal-Adresse. Am liebsten zahlst du vorab, aber PayPal geht auch noch vor Ort. Bar vor Ort genauso.</span></li>
-                  <li><span class="tick"></span><span>Wellpass gilt nur vor Ort. Du checkst vor der Stunde in der Wellpass-App ein und zahlst nichts an mich. Anmelden musst du dich hier trotzdem. Über Zoom kostet die Stunde 19 Euro.</span></li>
+                  <li><span class="tick"></span><span>Wellpass gilt nur vor Ort. Du scannst vor der Stunde wie gewohnt den QR-Code in der Wellpass-App und zahlst nichts. Anmelden musst du dich hier trotzdem. Über Zoom kostet die Stunde 19 Euro.</span></li>
                 </ul>
               </div>
             </div>
@@ -205,25 +210,44 @@
             const tag = new Date(erster);
             tag.setDate(erster.getDate() + i * 7);
             const datum = tag.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' });
-            const abgesagt = i === 2; // Beispiel für einen abgesagten Termin
+            // Drei Zustände: frei, vor Ort ausgebucht, abgesagt. Hier fest
+            // verdrahtete Beispiele; in der gebauten Seite kommt „ausgebucht"
+            // aus der Platzzahl und „abgesagt" von Bine. Ausgebucht heißt immer
+            // nur vor Ort — über Zoom gibt es keine Platzgrenze.
+            const abgesagt = i === 2;
+            const voll = i === 1;
             alle.push({
-              cls: abgesagt ? 'termin is-off' : 'termin',
+              cls: abgesagt ? 'termin is-off' : voll ? 'termin is-online' : 'termin',
               // Der erste Eintrag ist immer der nächstliegende Mittwoch, höchstens
               // sechs Tage entfernt. Deshalb trägt nur er die Zusatzangabe.
               wann: (i > 0 ? 'Mittwoch, ' : tageBisMittwoch === 0 ? 'Heute, Mittwoch, ' : 'Diesen Mittwoch, ') + datum,
               wo: abgesagt
                 ? 'Fällt aus, Bine ist im Urlaub'
-                : '19:30–20:30 · SOMOS, Lindwurmstraße 92A · oder per Zoom',
-              abgesagt: abgesagt,
+                : voll
+                  ? '19:30–20:30 · Vor Ort ausgebucht, über Zoom ist noch Platz'
+                  : '19:30–20:30 · SOMOS, Lindwurmstraße 92A · auch per Zoom',
+              status: abgesagt ? 'Abgesagt' : voll ? 'Nur noch online' : 'Platz frei',
+              statusCls: 'status ' + (abgesagt ? 'aus' : voll ? 'voll' : 'frei'),
+              // Ausgebuchte Mittwoche bleiben wählbar, nur eben online.
               offen: !abgesagt,
-              vorOrt: i === 0 ? 'opt is-on' : 'opt',
+              zu: abgesagt,
+              // Kurzform für die Auswahlpillen im Formular, dort ist kein Platz
+              // für den ganzen Datumsnamen.
+              kurz: tag.toLocaleDateString('de-DE', { day: 'numeric', month: 'short' }),
+              // Der Renderer im Mockup gibt disabled nicht mit aus, deshalb
+              // trägt die Pille ihren Zustand zusätzlich als Klasse.
+              pille: abgesagt ? 'opt is-aus' : voll ? 'opt is-voll' : 'opt',
             });
           }
+
+          // Vorausgewählt ist der erste buchbare Mittwoch.
+          const ersterOffener = alle.find((t) => t.offen);
+          if (ersterOffener) ersterOffener.pille = 'opt is-on';
 
           return {
             termine: alle.slice(0, 4),
             spaeter: alle.slice(4),
-            formularTitel: alle[0].wann + ', vor Ort',
+            pillen: alle,
           };
         }
       }
