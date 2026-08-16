@@ -6,6 +6,7 @@
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
     <title>Angebot & Preise · Bee Active</title>
     <script src="./support.js"></script>
+    <script src="./klipps.js" defer></script>
   </head>
   <body>
     <x-dc>
@@ -42,7 +43,11 @@
         <div class="wrap" style="padding-top:44px;padding-bottom:72px">
           <div class="two">
             <div>
-              <img class="rounded" src="https://storage.e.jimdo.com/cdn-cgi/image/quality=82,fit=scale-down,format=auto,width=1200/image/424344735/c5641f36-93a9-4285-829c-d030adc1e236.jpg" alt="Yoga im Kursraum" style="height:440px;object-position:50% 34%" />
+              <!-- Clip 2 liegt waagerecht im Bild und füllt deshalb den breiten
+                   Rahmen, in dem sonst das Kursraumfoto stand. -->
+              <figure class="klipp wiebild" style="background-image:url(./video/bine-2.jpg)">
+                <video src="./video/bine-2.mp4" autoplay loop muted playsinline preload="metadata" aria-label="Herabschauender Hund im Kursraum, stummer Clip"></video>
+              </figure>
             </div>
             <div>
               <div class="eyebrow">Jeden Mittwoch</div>
@@ -52,13 +57,13 @@
                 kennen. Die Entspannung am Ende ist fest eingeplant.</p>
               <p style="margin:16px 0 0">Für Anfängerinnen wie für Fortgeschrittene: Jede Haltung
                 lässt sich anpassen. Du kannst vor Ort im SOMOS dabei sein oder von zuhause über Zoom.</p>
-              <p style="margin:16px 0 0">Du hast Wellpass? Dann ist die Stunde für dich schon
-                abgedeckt. Du checkst in der Wellpass-App ein und zahlst nichts an mich, vor Ort
-                genauso wie über Zoom. Anmelden musst du dich hier trotzdem, damit ich weiß, wie
-                viele kommen.</p>
+              <p style="margin:16px 0 0">Du hast Wellpass? Dann ist die Stunde vor Ort für dich schon
+                abgedeckt. Du checkst in der Wellpass-App ein und zahlst nichts an mich. Über Zoom
+                gilt Wellpass nicht, da kostet die Stunde 19 Euro. Anmelden musst du dich hier
+                immer, damit ich weiß, wie viele kommen.</p>
               <div class="preis" style="margin-top:26px">
                 19 Euro pro Stunde
-                <span class="neben">oder kostenfrei über Wellpass · Einstieg jederzeit, keine Mitgliedschaft</span>
+                <span class="neben">oder kostenfrei über Wellpass, vor Ort · Einstieg jederzeit, keine Mitgliedschaft</span>
               </div>
               <p class="nur-desktop" style="margin:26px 0 0"><a class="btn" href="./anmelden.dc.html">Für Mittwoch anmelden</a></p>
             </div>
@@ -138,7 +143,7 @@
           <p class="hinweis" style="margin:0;max-width:60ch">
             Alle Preise sind Endpreise. Umsatzsteuerbefreit nach § 19 UStG (Kleinunternehmerregelung),
             deshalb wird keine Umsatzsteuer ausgewiesen. Bezahlt wird per PayPal an
-            beeactive@mailbox.org, dann bitte vor der Stunde, oder bar vor Ort.
+            beeactive@mailbox.org, am liebsten vorab, sonst vor Ort. Bar vor Ort geht genauso.
           </p>
         </div>
 
