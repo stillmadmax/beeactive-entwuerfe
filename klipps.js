@@ -1,10 +1,11 @@
 // Startet die stummen Clips.
 //
 // Warum es das braucht: Die Seiten werden vom dc-Runtime über React gerendert,
-// und dabei geht das `muted`-Attribut aus der Vorlage verloren. Ohne `muted`
-// verweigern die Browser den Autostart, die Clips bleiben als Standbild stehen.
-// Hier wird `muted` deshalb am Element selbst gesetzt und die Wiedergabe
-// angestossen, sobald die Clips im DOM sind.
+// und dabei gehen die Attribute `muted` und `loop` aus der Vorlage verloren.
+// Ohne `muted` verweigern die Browser den Autostart, ohne `loop` läuft jeder
+// Clip genau einmal und bleibt dann stehen. Hier werden beide deshalb am
+// Element selbst gesetzt und die Wiedergabe angestossen, sobald die Clips im
+// DOM sind.
 //
 // Wer Bewegung abgestellt hat (prefers-reduced-motion), bekommt nichts davon:
 // dann bleiben die Clips pausiert, und stil.css zeigt an ihrer Stelle das
@@ -16,6 +17,7 @@
   function start() {
     document.querySelectorAll('video[autoplay]').forEach(function (v) {
       v.muted = true;
+      v.loop = true;
       if (v.paused) v.play().catch(function () {});
     });
   }
