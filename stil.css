@@ -72,6 +72,10 @@ img{display:block;max-width:100%}
    Bine übt im unteren Bildteil, deshalb liegt der Ausschnitt tief. */
 .klipp.wiebild{height:440px}
 .klipp.wiebild video{object-position:50% 75%}
+/* Ein stehender Clip braucht ein hochformatigeres Fenster: im breiten Rahmen
+   fehlten oben die Hände oder unten die Matte. */
+.klipp.aufrecht{height:auto;aspect-ratio:4/5}
+.klipp.aufrecht video{object-position:50% 45%}
 
 /* Anmeldeseite */
 /* Seitenkopf: mobil darf er die ganze Breite haben, das Maß macht dort der
@@ -126,6 +130,7 @@ img{display:block;max-width:100%}
   .nav{justify-content:flex-start;padding:16px 0}
   .rounded{height:300px !important}
   .klipp.wiebild{height:300px}
+  .klipp.aufrecht{height:auto}
   /* Mobil trägt das Kopfbild den Clip: hochkant gefilmt, hochkant gezeigt.
      Der Kopfbereich wird dafür höher: bei 440px läge die Bewegung komplett
      hinter Überschrift und Chips, so bleibt darüber ein freier Streifen. */
