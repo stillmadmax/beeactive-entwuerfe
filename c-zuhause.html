@@ -57,7 +57,7 @@
               <h2 class="serif h2" style="margin:16px 0 0">Ja. Auch wenn du das gerade nicht glaubst</h2>
             </div>
             <div>
-              <p style="margin:0">Du haderst mit dir, weil du Angst hast, nicht sportlich oder nicht dehnbar genug zu sein? Vielleicht bist du auch kein junger Hupfer mehr in den Zwanzigern oder fühlst dich gerade nicht so wohl in deiner Haut.</p>
+              <p style="margin:0">Du zögerst, weil du dich nicht für sportlich oder dehnbar genug hältst? Vielleicht bist du auch kein junger Hupfer mehr in den Zwanzigern oder fühlst dich gerade nicht so wohl in deiner Haut.</p>
               <p style="margin:18px 0 0">Ganz egal. Du bist goldrichtig bei mir. Ich mache Platz für alle, die sich bewegen möchten, und dafür brauchst du keine besonderen Voraussetzungen.</p>
             </div>
           </div>
@@ -90,8 +90,8 @@
             <div>
               <div class="eyebrow">Die Stunde</div>
               <h2 class="serif h2" style="margin:16px 0 18px">Dynamic Yoga</h2>
-              <p style="margin:0">Wir arbeiten an der anatomisch genauen Ausrichtung der Haltungen, eingebettet in einen Flow. Das macht die Stunde zum Ganzkörperworkout und zugleich zu einer Möglichkeit, den eigenen Körper besser kennenzulernen.</p>
-              <p style="margin:18px 0 0">Die Entspannung kommt nicht zu kurz und ist in jeder Stunde fest eingeplant. Für Anfängerinnen wie für Fortgeschrittene, jede Haltung lässt sich anpassen.</p>
+              <p style="margin:0">Wir arbeiten an der anatomisch genauen Ausrichtung der Haltungen, eingebettet in einen Flow. Das macht die Stunde zum Ganzkörperworkout, und ganz nebenbei lernst du deinen Körper besser kennen.</p>
+              <p style="margin:18px 0 0">Die Entspannung kommt nicht zu kurz und ist in jeder Stunde fest eingeplant. Für Anfängerinnen wie für Fortgeschrittene: Jede Haltung lässt sich anpassen.</p>
             </div>
           </div>
         </div>
@@ -155,7 +155,7 @@
 
         <div class="wrap nur-desktop" style="padding-bottom:88px">
           <div class="soft" style="text-align:center;padding-top:64px;padding-bottom:64px">
-            <h2 class="serif h2" style="margin:0 auto 22px;max-width:18ch">Diesen Mittwoch, 19. August, 19:30 Uhr</h2>
+            <h2 class="serif h2" style="margin:0 auto 22px;max-width:18ch">{{ naechster }}</h2>
             <a class="btn" href="./anmelden.dc.html">Für Mittwoch anmelden</a>
             <p style="margin:18px 0 0;color:var(--muted);font-size:16px">Kein Konto nötig. Name, Mail, fertig.</p>
           </div>
@@ -190,7 +190,23 @@
       data-props='{}'
     >
       class Component extends DCLogic {
-        renderVals() { return {}; }
+        // Datum des Abschluss-Blocks aus dem heutigen Datum gerechnet, damit
+        // der Entwurf nicht altert — gleiche Logik wie auf der Anmeldeseite,
+        // inklusive Anmeldeschluss 18:30 am Kurstag. Nur fürs Mockup.
+        renderVals() {
+          const MITTWOCH = 3;
+          const jetzt = new Date();
+          const heute = new Date(jetzt.getFullYear(), jetzt.getMonth(), jetzt.getDate());
+          const schlussVorbei = jetzt.getDay() === MITTWOCH &&
+            (jetzt.getHours() > 18 || (jetzt.getHours() === 18 && jetzt.getMinutes() >= 30));
+          let tage = (MITTWOCH - heute.getDay() + 7) % 7;
+          if (tage === 0 && schlussVorbei) tage = 7;
+          heute.setDate(heute.getDate() + tage);
+          const datum = heute.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' });
+          return {
+            naechster: (tage === 0 ? 'Heute, Mittwoch, ' : 'Diesen Mittwoch, ') + datum + ', 19:30 Uhr',
+          };
+        }
       }
     </script>
   </body>

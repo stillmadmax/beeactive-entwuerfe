@@ -48,9 +48,9 @@
               <div class="eyebrow">Jeden Mittwoch</div>
               <h2 class="serif h2" style="margin:14px 0 16px">Dynamic Yoga</h2>
               <p style="margin:0">60 Minuten, anatomisch genaue Ausrichtung, eingebettet in einen Flow.
-                Ganzkörperworkout und zugleich eine Möglichkeit, den eigenen Körper besser
-                kennenzulernen. Die Entspannung am Ende ist fest eingeplant.</p>
-              <p style="margin:16px 0 0">Für Anfängerinnen wie für Fortgeschrittene, jede Haltung
+                Ganzkörperworkout, und ganz nebenbei lernst du deinen Körper besser
+                kennen. Die Entspannung am Ende ist fest eingeplant.</p>
+              <p style="margin:16px 0 0">Für Anfängerinnen wie für Fortgeschrittene: Jede Haltung
                 lässt sich anpassen. Du kannst vor Ort im SOMOS dabei sein oder von zuhause über Zoom.</p>
               <p style="margin:16px 0 0">Du hast Wellpass? Dann ist die Stunde für dich schon
                 abgedeckt. Du checkst in der Wellpass-App ein und zahlst nichts an mich, vor Ort
@@ -144,7 +144,7 @@
 
         <div class="wrap nur-desktop" style="padding-bottom:88px">
           <div class="soft" style="text-align:center;padding-top:64px;padding-bottom:64px">
-            <h2 class="serif h2" style="margin:0 auto 22px;max-width:18ch">Diesen Mittwoch, 19. August, 19:30 Uhr</h2>
+            <h2 class="serif h2" style="margin:0 auto 22px;max-width:18ch">{{ naechster }}</h2>
             <a class="btn" href="./anmelden.dc.html">Für Mittwoch anmelden</a>
             <p style="margin:18px 0 0;color:var(--muted);font-size:16px">Kein Konto nötig. Name, Mail, fertig.</p>
           </div>
@@ -179,7 +179,23 @@
       data-props='{}'
     >
       class Component extends DCLogic {
-        renderVals() { return {}; }
+        // Datum des Abschluss-Blocks aus dem heutigen Datum gerechnet, damit
+        // der Entwurf nicht altert — gleiche Logik wie auf der Anmeldeseite,
+        // inklusive Anmeldeschluss 18:30 am Kurstag. Nur fürs Mockup.
+        renderVals() {
+          const MITTWOCH = 3;
+          const jetzt = new Date();
+          const heute = new Date(jetzt.getFullYear(), jetzt.getMonth(), jetzt.getDate());
+          const schlussVorbei = jetzt.getDay() === MITTWOCH &&
+            (jetzt.getHours() > 18 || (jetzt.getHours() === 18 && jetzt.getMinutes() >= 30));
+          let tage = (MITTWOCH - heute.getDay() + 7) % 7;
+          if (tage === 0 && schlussVorbei) tage = 7;
+          heute.setDate(heute.getDate() + tage);
+          const datum = heute.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' });
+          return {
+            naechster: (tage === 0 ? 'Heute, Mittwoch, ' : 'Diesen Mittwoch, ') + datum + ', 19:30 Uhr',
+          };
+        }
       }
     </script>
   </body>
