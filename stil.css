@@ -64,11 +64,6 @@ img{display:block;max-width:100%}
    bei prefers-reduced-motion genau dieses Bild stehen bleibt. */
 .klipp{position:relative;overflow:hidden;border-radius:20px;background:var(--sand) center/cover no-repeat;margin:0}
 .klipp video{display:block;width:100%;height:100%;object-fit:cover}
-/* Einzelner Clip, mittig. Nicht im vollen Hochformat der Aufnahme, sonst
-   füllt leere Wand den halben Rahmen: der Ausschnitt sitzt tief, dort übt
-   Bine. Die Breite ist begrenzt, sonst wird der Block absurd hoch. */
-.klipp.einzeln{aspect-ratio:4/5;max-width:520px;margin:0 auto}
-.klipp.einzeln video{object-position:50% 75%}
 /* Kopfbild: das Video ist hochkant und nur 464px breit, am Desktop wäre es
    unscharf. Dort bleibt deshalb das Foto stehen, mobil läuft der Clip. */
 .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 75%;display:none}
@@ -137,7 +132,6 @@ img{display:block;max-width:100%}
   .hero{min-height:560px}
   .hero video{display:block}
   .hero img{display:none}
-  .klipp.einzeln{max-width:none}
   .stickybar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--cream);border-top:1px solid var(--clay);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
   .stickybar .btn{display:block;width:100%;padding:16px 20px}
   .foot{padding-bottom:120px;gap:20px}
