@@ -59,7 +59,12 @@ img{display:block;max-width:100%}
 .stickybar{display:none}
 
 /* Anmeldeseite */
-.pagehead{padding-top:24px;padding-bottom:8px;max-width:34ch}
+/* Seitenkopf: mobil darf er die ganze Breite haben, das Maß macht dort der
+   Bildschirm. Auf dem Desktop bleibt er linksbündig in der normalen Spalte —
+   eine 34ch schmale Spalte im zentrierten .wrap sähe sonst aus, als stünde
+   die Überschrift mitten im Nichts. Das Maß begrenzen Überschrift und Lede. */
+.pagehead{padding-top:40px;padding-bottom:8px}
+.pagehead .h1{max-width:16ch}
 .termine{display:grid;gap:14px}
 .termin{background:#fff;border:1px solid rgba(217,196,174,0.7);border-radius:20px;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .termin.is-off{opacity:0.55}
@@ -89,6 +94,8 @@ img{display:block;max-width:100%}
 
 @media (max-width:880px){
   .two,.qs{grid-template-columns:1fr;gap:32px}
+  .pagehead{padding-top:24px}
+  .pagehead .h1{max-width:none}
   .sec{padding-top:58px;padding-bottom:58px}
   /* Kopfzeile bricht um: Wortmarke oben, die Seitenlinks als eigene Zeile
      darunter. Sie scrollt waagerecht, falls die Links nicht nebeneinander
