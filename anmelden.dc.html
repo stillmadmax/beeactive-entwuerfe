@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
-    <title>Anmelden — Bee Active</title>
+    <title>Anmelden · Bee Active</title>
     <script src="./support.js"></script>
   </head>
   <body class="ohne-sticky">
@@ -32,54 +32,62 @@
 
         <div class="wrap pagehead">
           <div class="eyebrow">Dynamic Yoga, mittwochs 19:30</div>
-          <h1 class="serif h1" style="margin:14px 0 0;font-size:clamp(30px,4.4vw,54px)">Such dir einen Mittwoch aus.</h1>
+          <h1 class="serif h1" style="margin:14px 0 0;font-size:clamp(30px,4.4vw,54px)">Jeder Mittwoch ist deiner</h1>
           <p class="lede" style="margin:18px 0 0;color:var(--muted);max-width:46ch">
-            Einstieg jederzeit, auch mitten im Jahr. Kein Konto, keine Karte — Name, Mail, fertig.
+            Einstieg jederzeit, auch mitten im Jahr, und für so viele Mittwoche, wie du magst.
+            Kein Konto, keine Karte. Name, Mail, fertig.
+            Anmeldeschluss ist um 18:30 Uhr am selben Tag.
           </p>
         </div>
 
         <div class="wrap" style="padding-top:36px;padding-bottom:56px">
           <div class="termine">
-            <div class="termin">
-              <div>
-                <div class="wann">Diesen Mittwoch</div>
-                <div class="wo">19:30–20:30 · SOMOS, Lindwurmstraße 92A · oder per Zoom</div>
+            <sc-for list="{{ termine }}" as="t">
+              <div class="{{ t.cls }}">
+                <div>
+                  <div class="wann">{{ t.wann }}</div>
+                  <div class="wo">{{ t.wo }}</div>
+                </div>
+                <sc-if value="{{ t.abgesagt }}">
+                  <div class="hinweis">Abgesagt</div>
+                </sc-if>
+                <sc-if value="{{ t.offen }}">
+                  <div class="optionen">
+                    <button class="{{ t.vorOrt }}" type="button">Vor Ort</button>
+                    <button class="opt" type="button">Online</button>
+                  </div>
+                </sc-if>
               </div>
-              <div class="optionen">
-                <button class="opt is-on" type="button">Vor Ort</button>
-                <button class="opt" type="button">Online</button>
-              </div>
-            </div>
-            <div class="termin">
-              <div>
-                <div class="wann">Mittwoch in einer Woche</div>
-                <div class="wo">19:30–20:30 · SOMOS, Lindwurmstraße 92A · oder per Zoom</div>
-              </div>
-              <div class="optionen">
-                <button class="opt" type="button">Vor Ort</button>
-                <button class="opt" type="button">Online</button>
-              </div>
-            </div>
-            <div class="termin is-off">
-              <div>
-                <div class="wann">Mittwoch in zwei Wochen</div>
-                <div class="wo">Fällt aus — Bine ist im Urlaub</div>
-              </div>
-              <div class="hinweis">Abgesagt</div>
-            </div>
-            <div class="termin">
-              <div>
-                <div class="wann">Mittwoch in drei Wochen</div>
-                <div class="wo">19:30–20:30 · SOMOS, Lindwurmstraße 92A · oder per Zoom</div>
-              </div>
-              <div class="optionen">
-                <button class="opt" type="button">Vor Ort</button>
-                <button class="opt" type="button">Online</button>
-              </div>
-            </div>
+            </sc-for>
           </div>
+
+          <details class="mehr">
+            <!-- Text ohne „anzeigen", damit er auch im aufgeklappten Zustand stimmt;
+                 das +/− vor der Zeile kommt aus stil.css. -->
+            <summary>Vier weitere Mittwoche</summary>
+            <div class="termine">
+              <sc-for list="{{ spaeter }}" as="t">
+                <div class="{{ t.cls }}">
+                  <div>
+                    <div class="wann">{{ t.wann }}</div>
+                    <div class="wo">{{ t.wo }}</div>
+                  </div>
+                  <sc-if value="{{ t.abgesagt }}">
+                    <div class="hinweis">Abgesagt</div>
+                  </sc-if>
+                  <sc-if value="{{ t.offen }}">
+                    <div class="optionen">
+                      <button class="opt" type="button">Vor Ort</button>
+                      <button class="opt" type="button">Online</button>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </details>
           <p class="hinweis" style="margin:20px 0 0">
             Online-Teilnahme: Den Zoom-Link bekommst du mit der Bestätigungsmail.
+            Anmelden kannst du dich bis 18:30 Uhr am Kurstag, danach steht die Stunde fest.
           </p>
         </div>
 
@@ -88,7 +96,7 @@
             <div class="two" style="align-items:start">
               <div>
                 <div class="eyebrow">Deine Anmeldung</div>
-                <h2 class="serif h2" style="margin:14px 0 6px">Diesen Mittwoch, vor Ort</h2>
+                <h2 class="serif h2" style="margin:14px 0 6px">{{ formularTitel }}</h2>
                 <p class="hinweis" style="margin:0 0 26px">19 Euro · 60 Minuten · Platz frei</p>
 
                 <div class="feld">
@@ -99,6 +107,14 @@
                   <label for="mail">E-Mail</label>
                   <input id="mail" type="email" placeholder="für die Bestätigung" />
                 </div>
+                <div class="feld">
+                  <label>Wie zahlst du?</label>
+                  <div class="optionen" style="margin-top:8px">
+                    <button class="opt is-on" type="button">PayPal, vorab</button>
+                    <button class="opt" type="button">Bar vor Ort</button>
+                    <button class="opt" type="button">Wellpass</button>
+                  </div>
+                </div>
                 <button class="btn" type="button" style="width:100%;margin-top:6px">Verbindlich anmelden</button>
                 <p class="hinweis" style="margin:16px 0 0">
                   Mit der Anmeldung stimmst du der <a href="#">Datenschutzerklärung</a> zu. Wir speichern nur Name und Mail, und nur bis der Termin vorbei ist.
@@ -107,10 +123,11 @@
               <div>
                 <div class="eyebrow">Was danach passiert</div>
                 <ul class="list" style="margin-top:18px">
-                  <li><span class="tick"></span><span>Du bekommst sofort eine Mail mit Termin, Adresse und — bei Online — dem Zoom-Link.</span></li>
+                  <li><span class="tick"></span><span>Du bekommst sofort eine Mail mit Termin und Adresse, bei Online mit dem Zoom-Link.</span></li>
                   <li><span class="tick"></span><span>In derselben Mail ist ein Abmeldelink. Ein Klick, fertig, kein Konto nötig.</span></li>
                   <li><span class="tick"></span><span>Am Vortag kommt eine kurze Erinnerung.</span></li>
-                  <li><span class="tick"></span><span>Bezahlt wird per PayPal oder bar vor Ort. Beim ersten Mal einfach fragen.</span></li>
+                  <li><span class="tick"></span><span>In der Mail steht die PayPal-Adresse. Wenn du per PayPal zahlst, dann bitte vor der Stunde. Bar geht auch, das dann vor Ort.</span></li>
+                  <li><span class="tick"></span><span>Mit Wellpass zahlst du nichts an mich. Du checkst vor der Stunde in der Wellpass-App ein. Anmelden musst du dich hier trotzdem.</span></li>
                 </ul>
               </div>
             </div>
@@ -121,16 +138,16 @@
           <div class="two" style="align-items:start">
             <div>
               <div class="eyebrow">Mini Yoga Retreat</div>
-              <h2 class="serif h2" style="margin:14px 0 16px">Derzeit ist kein Retreat geplant.</h2>
-              <p style="margin:0;max-width:46ch">Vier Stunden mit Meditation, langem Flow, Kuchen und Shavasana, 85 Euro. Sobald ein Termin steht, taucht er hier auf. Wenn du vorab Bescheid wissen willst, <a href="#">schreib mir kurz</a>.</p>
+              <h2 class="serif h2" style="margin:14px 0 16px">Derzeit ist kein Retreat geplant</h2>
+              <p style="margin:0;max-width:46ch">Vier Stunden mit Meditation, langem Flow, Kuchen und Shavasana, 85 Euro. Sobald ein Termin steht, taucht er hier auf. Wenn du Interesse hast, <a href="mailto:beeactive@mailbox.org?subject=Interesse%20am%20Mini%20Yoga%20Retreat">schreib mir kurz</a>. Sobald genug zusammenkommen, plane ich einen.</p>
             </div>
             <div>
               <div class="eyebrow">Erstes Mal dabei?</div>
               <ul class="list" style="margin-top:18px">
                 <li><span class="tick"></span><span>Matten, Kissen und Decken sind da. Eigene Matte gern mitbringen.</span></li>
-                <li><span class="tick"></span><span>Es gibt keine Umkleide — komm schon umgezogen.</span></li>
-                <li><span class="tick"></span><span>Etwa fünf Minuten vorher da sein. Die Tür ist meistens offen.</span></li>
-                <li><span class="tick"></span><span>Der Kursraum liegt unten. Das SOMOS hat mehrere Räume.</span></li>
+                <li><span class="tick"></span><span>Es gibt keine Umkleide, komm am besten schon umgezogen.</span></li>
+                <li><span class="tick"></span><span>Etwa fünf Minuten vorher da sein.</span></li>
+                <li><span class="tick"></span><span>Der Eingang ist im Hinterhof. Dort bei „SOMOS Kursräume" klingeln, dann mache ich auf.</span></li>
               </ul>
             </div>
           </div>
@@ -147,7 +164,7 @@
               <a href="./kontakt.dc.html">Kontakt</a>
             </div>
             <div class="footlinks">
-              <a href="https://www.instagram.com/beeactive_athome/">Instagram</a>
+              <a href="https://www.instagram.com/beeactive_muenchen/">Instagram</a>
               <a href="#">Impressum</a>
               <a href="#">Datenschutz</a>
             </div>
@@ -161,7 +178,49 @@
       data-props='{}'
     >
       class Component extends DCLogic {
-        renderVals() { return {}; }
+        // Erzeugt die nächsten acht Mittwoche aus dem heutigen Datum, damit der
+        // Entwurf nicht altert. In der gebauten Seite kommen die Termine aus der
+        // Serienregel im Admin. Dieser Code ist nur fürs Mockup.
+        renderVals() {
+          const MITTWOCH = 3;
+          const jetzt = new Date();
+          const heute = new Date(jetzt.getFullYear(), jetzt.getMonth(), jetzt.getDate());
+
+          // Anmeldeschluss 18:30: danach ist der heutige Mittwoch keine Option mehr.
+          const schlussVorbei = jetzt.getDay() === MITTWOCH &&
+            (jetzt.getHours() > 18 || (jetzt.getHours() === 18 && jetzt.getMinutes() >= 30));
+
+          const erster = new Date(heute);
+          let tageBisMittwoch = (MITTWOCH - heute.getDay() + 7) % 7;
+          if (tageBisMittwoch === 0 && schlussVorbei) tageBisMittwoch = 7;
+          erster.setDate(heute.getDate() + tageBisMittwoch);
+
+          const alle = [];
+          for (let i = 0; i < 8; i++) {
+            const tag = new Date(erster);
+            tag.setDate(erster.getDate() + i * 7);
+            const datum = tag.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' });
+            const abgesagt = i === 2; // Beispiel für einen abgesagten Termin
+            alle.push({
+              cls: abgesagt ? 'termin is-off' : 'termin',
+              // Der erste Eintrag ist immer der nächstliegende Mittwoch, höchstens
+              // sechs Tage entfernt. Deshalb trägt nur er die Zusatzangabe.
+              wann: (i > 0 ? 'Mittwoch, ' : tageBisMittwoch === 0 ? 'Heute, Mittwoch, ' : 'Diesen Mittwoch, ') + datum,
+              wo: abgesagt
+                ? 'Fällt aus, Bine ist im Urlaub'
+                : '19:30–20:30 · SOMOS, Lindwurmstraße 92A · oder per Zoom',
+              abgesagt: abgesagt,
+              offen: !abgesagt,
+              vorOrt: i === 0 ? 'opt is-on' : 'opt',
+            });
+          }
+
+          return {
+            termine: alle.slice(0, 4),
+            spaeter: alle.slice(4),
+            formularTitel: alle[0].wann + ', vor Ort',
+          };
+        }
       }
     </script>
   </body>
