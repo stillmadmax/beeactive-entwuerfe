@@ -81,8 +81,14 @@ img{display:block;max-width:100%}
 
 @media (max-width:880px){
   .two,.qs{grid-template-columns:1fr;gap:32px}
-  .navlinks{display:none}
   .sec{padding-top:58px;padding-bottom:58px}
+  /* Kopfzeile bricht um: Wortmarke oben, die Seitenlinks als eigene Zeile
+     darunter. Sie scrollt waagerecht, falls die Links nicht nebeneinander
+     passen — die Seite selbst läuft dabei nicht über. */
+  .nav{flex-wrap:wrap;row-gap:10px}
+  .navlinks{order:3;width:100%;gap:20px;font-size:15px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .navlinks::-webkit-scrollbar{display:none}
+  .navlinks a{white-space:nowrap}
 }
 @media (max-width:700px){
   body{padding-bottom:140px}
@@ -91,8 +97,6 @@ img{display:block;max-width:100%}
   .rounded{height:300px !important}
   .stickybar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--cream);border-top:1px solid var(--clay);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
   .stickybar .btn{display:block;width:100%;padding:16px 20px}
-  /* Mobil ist die Kopfzeile auf die Wortmarke reduziert — die Fußzeile ist
-     dann die einzige Navigation zwischen den Seiten. */
   .foot{padding-bottom:120px;gap:20px}
   .footlinks{gap:14px 20px}
   .termin{flex-direction:column;align-items:stretch;gap:14px}
