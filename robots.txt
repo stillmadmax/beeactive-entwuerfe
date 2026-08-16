@@ -1,0 +1,3 @@
+# Vorschau-Entwuerfe, nichts davon gehoert in eine Suchmaschine.
+User-agent: *
+Disallow: /
