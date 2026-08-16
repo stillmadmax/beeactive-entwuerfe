@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+</script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./support.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet data-dc-atomics>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+        <style>
+          :root{
+            --cream:#FCF8F1;
+            --sand:#EADDC9;
+            --clay:#D9C4AE;
+            --ink:#241D17;
+            --muted:#6F6357;
+            --rose:#A87A70;
+            --deep:#3A2E26;
+            --max:1160px;
+          }
+          *{box-sizing:border-box}
+          body{margin:0;background:var(--cream);color:var(--ink);font-family:'Work Sans',system-ui,sans-serif;font-size:17.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+          a{color:var(--rose);text-decoration:none;border-bottom:1px solid rgba(168,122,112,0.4)}
+          a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+          img{display:block;max-width:100%}
+          .wrap{max-width:var(--max);margin:0 auto;padding-left:20px;padding-right:20px}
+          .serif{font-family:'Lora',Georgia,serif;font-weight:500;line-height:1.15;letter-spacing:-0.015em}
+          .h1{font-size:clamp(34px,5.4vw,72px);line-height:1.08}
+          .h2{font-size:clamp(26px,3.4vw,42px)}
+          .h3{font-size:clamp(19px,2vw,26px)}
+          .lede{font-size:clamp(17px,1.5vw,21px);line-height:1.65}
+          .eyebrow{font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose);font-weight:600}
+          .sec{padding-top:88px;padding-bottom:88px}
+          .btn{display:inline-block;background:var(--rose);color:#fff;padding:16px 32px;font-weight:500;font-size:16px;border-radius:999px;border:0;white-space:nowrap;text-align:center}
+          .btn:hover{background:var(--deep);color:#fff;border:0}
+          .nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0}
+          .navlinks{display:flex;gap:28px;font-size:16px}
+          .navlinks a{border:0;color:var(--muted)}
+          .navlinks a:hover{color:var(--ink)}
+          .mark{font-family:'Lora',serif;font-weight:600;letter-spacing:0.2em;font-size:15px;color:var(--ink);white-space:nowrap}
+          .hero{position:relative;border-radius:24px;overflow:hidden;min-height:clamp(440px,58vw,640px);display:flex;align-items:flex-end}
+          .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 78%}
+          .hero .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,23,18,0.04) 0%,rgba(30,23,18,0.20) 32%,rgba(30,23,18,0.62) 64%,rgba(30,23,18,0.90) 100%)}
+          .hero .inner{position:relative;padding:clamp(24px,4vw,56px);color:#fff;max-width:760px;text-shadow:0 1px 28px rgba(20,14,10,0.4)}
+          .hero .eyebrow{color:rgba(255,255,255,0.88)}
+          .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+          .chip{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.36);color:#fff;padding:7px 14px;border-radius:999px;font-size:14px;text-shadow:none}
+          .two{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+          .soft{background:var(--sand);border-radius:24px;padding:clamp(28px,4vw,64px)}
+          .deepblock{background:var(--deep);color:var(--cream);border-radius:24px;padding:clamp(28px,4vw,64px)}
+          .deepblock .eyebrow{color:var(--clay)}
+          .qs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+          .qcard{background:#fff;border-radius:20px;padding:28px;border:1px solid rgba(217,196,174,0.5)}
+          .qname{margin-top:16px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--rose);font-weight:600}
+          .rounded{border-radius:20px;object-fit:cover;width:100%}
+          .list{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+          .list li{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:start}
+          .tick{width:11px;height:11px;border-radius:50%;background:var(--rose);margin-top:9px}
+          .quali{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+          .quali span{background:var(--sand);padding:8px 16px;font-size:14px;border-radius:999px;color:var(--ink)}
+          .foot{padding:40px 0 56px;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;font-size:15px;color:var(--muted);border-top:1px solid var(--clay)}
+          .foot a{border:0;color:var(--muted)}
+          .foot a:hover{color:var(--ink)}
+          .stickybar{display:none}
+          @media (max-width:880px){
+            .two,.qs{grid-template-columns:1fr;gap:32px}
+            .navlinks{display:none}
+            .sec{padding-top:58px;padding-bottom:58px}
+          }
+          @media (max-width:700px){
+            body{padding-bottom:86px}
+            .nav .btn{display:none}
+            .nav{justify-content:flex-start;padding:16px 0}
+            .rounded{height:300px !important}
+            .stickybar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--cream);border-top:1px solid var(--clay);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+            .stickybar .btn{display:block;width:100%;padding:16px 20px}
+          }
+        </style>
+      </helmet>
+
+      <div data-screen-label="Startseite C — Zuhause">
+        <div class="wrap">
+          <div class="nav">
+            <div class="mark">BEE ACTIVE</div>
+            <div class="navlinks">
+              <a href="#">Angebot</a>
+              <a href="#">Über mich</a>
+              <a href="#">Kontakt</a>
+            </div>
+            <a class="btn" href="#">Anmelden</a>
+          </div>
+        </div>
+
+        <div class="wrap" style="padding-top:8px">
+          <div class="hero">
+            <img src="https://storage.e.jimdo.com/cdn-cgi/image/quality=82,fit=scale-down,format=auto,width=2000/image/424344062/2ee93fb5-8bad-4184-9488-747a3d5669c5.jpg" alt="Bine in einer Yogahaltung im Kursraum" />
+            <div class="veil"></div>
+            <div class="inner">
+              <div class="eyebrow">Yoga in München-Sendling</div>
+              <h1 class="serif h1" style="margin:16px 0 0">Eine Stunde in der Woche, die dir gehört.</h1>
+              <div class="chips">
+                <span class="chip">Mittwoch 19:30 Uhr</span>
+                <span class="chip">60 Minuten</span>
+                <span class="chip">Vor Ort oder Zoom</span>
+                <span class="chip">19 Euro</span>
+              </div>
+              <div style="margin-top:26px;display:flex;gap:14px;flex-wrap:wrap">
+                <a class="btn" href="#" style="text-shadow:none">Für Mittwoch anmelden</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap sec">
+          <div class="two">
+            <div>
+              <div class="eyebrow">Bin ich hier richtig?</div>
+              <h2 class="serif h2" style="margin:16px 0 0">Ja. Auch wenn du das gerade nicht glaubst.</h2>
+            </div>
+            <div>
+              <p style="margin:0">Du haderst mit dir, weil du Angst hast, nicht sportlich oder nicht dehnbar genug zu sein? Vielleicht bist du auch kein junger Hupfer mehr in den Zwanzigern oder fühlst dich gerade nicht so wohl in deiner Haut.</p>
+              <p style="margin:18px 0 0">Ganz egal. Du bist goldrichtig bei mir. Ich mache Platz für alle, die sich bewegen möchten, und dafür brauchst du keine besonderen Voraussetzungen.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap" style="padding-bottom:88px">
+          <div class="soft">
+            <div class="two">
+              <div>
+                <div class="eyebrow">Nach der Stunde</div>
+                <h2 class="serif h2" style="margin:16px 0 18px">Meistens bleibt noch jemand auf einen Tee.</h2>
+                <p style="margin:0;max-width:44ch">Wir sind selten mehr als zwölf. Nach der Stunde wird oft noch eine halbe Stunde geratscht. Wer mag, bleibt einfach da. Wer los muss, geht.</p>
+              </div>
+              <div>
+                <img class="rounded" src="https://storage.e.jimdo.com/cdn-cgi/image/quality=82,fit=scale-down,format=auto,width=1200/image/424344408/55a4e00e-9a65-4446-a195-aa809c4008e3.jpg" alt="Im Kursraum" style="height:400px;object-position:50% 30%" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap" style="padding-bottom:88px">
+          <div class="two">
+            <div>
+              <img class="rounded" src="https://storage.e.jimdo.com/cdn-cgi/image/quality=82,fit=scale-down,format=auto,width=1200/image/424344735/c5641f36-93a9-4285-829c-d030adc1e236.jpg" alt="Yoga im Kursraum" style="height:480px;object-position:50% 34%" />
+            </div>
+            <div>
+              <div class="eyebrow">Die Stunde</div>
+              <h2 class="serif h2" style="margin:16px 0 18px">Dynamic Yoga</h2>
+              <p style="margin:0">Wir arbeiten an der anatomisch genauen Ausrichtung der Haltungen, eingebettet in einen Flow. Das macht die Stunde zum Ganzkörperworkout und zugleich zu einer Möglichkeit, den eigenen Körper besser kennenzulernen.</p>
+              <p style="margin:18px 0 0">Die Entspannung kommt nicht zu kurz und ist in jeder Stunde fest eingeplant. Für Anfängerinnen wie für Fortgeschrittene, jede Haltung lässt sich anpassen.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap" style="padding-bottom:88px">
+          <div class="two">
+            <div>
+              <div class="eyebrow">Wer unterrichtet</div>
+              <h2 class="serif h2" style="margin:16px 0 18px">Ich bin Bine.</h2>
+              <p style="margin:0">Gebürtige Münchnerin, Bienenliebhaberin und Gründerin von Bee Active. Meine Stunden plane ich mit sportwissenschaftlichem und physiotherapeutischem Hintergrund, damit dein Körper nicht nur heute, sondern auch in zehn Jahren noch mitmacht.</p>
+              <div class="quali">
+                <span>B.Sc. Sportwissenschaft, TU München</span>
+                <span>200h Yogaausbildung</span>
+                <span>Physiotherapeutin</span>
+                <span>Beckenbodentherapeutin</span>
+              </div>
+              <p style="margin:24px 0 0"><a href="#">Mehr über mich</a></p>
+            </div>
+            <div>
+              <img class="rounded" src="https://storage.e.jimdo.com/cdn-cgi/image/quality=82,fit=scale-down,format=auto,width=1000/image/193908874/b95f7255-c1a3-4262-9535-08c449b33bff.jpg" alt="Bine Pinnau" style="height:480px;object-position:50% 28%" />
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap" style="padding-bottom:88px">
+          <div class="eyebrow" style="margin-bottom:24px">Stimmen</div>
+          <div class="qs">
+            <div class="qcard">
+              <p style="margin:0">„Yoga bei BeeActive ist eines der Highlights meiner Woche. Ich habe als Anfängerin gestartet und bin dank Bine weit gekommen, körperlich wie mental.“</p>
+              <div class="qname">Michi</div>
+            </div>
+            <div class="qcard">
+              <p style="margin:0">„Die Stunden sind abwechslungsreich und immer so gestaltet, dass jede von uns entsprechend ihrem Level mitmachen kann. Absolute Empfehlung.“</p>
+              <div class="qname">Ingrid</div>
+            </div>
+            <div class="qcard">
+              <p style="margin:0">„Man merkt in jeder Minute, mit welcher Leidenschaft sie dabei ist. Jeder kann sich bei Bine wohlfühlen.“</p>
+              <div class="qname">Veronika</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap" style="padding-bottom:88px">
+          <div class="deepblock">
+            <div class="two">
+              <div>
+                <div class="eyebrow">Save the bees</div>
+                <h3 class="serif h3" style="margin:14px 0 0">Mit jeder Kursteilnahme geht 1 Euro an die Bienenrettung.</h3>
+              </div>
+              <div>
+                <p style="margin:0;opacity:0.85">Die Spende geht an die Aurelia-Stiftung. Du tust also nicht nur dir etwas Gutes, sondern nebenbei auch den Bienen. So ist Bee Active überhaupt entstanden.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap" style="padding-bottom:88px">
+          <div class="two">
+            <div>
+              <div class="eyebrow">Praktisches</div>
+              <h2 class="serif h2" style="margin:16px 0 16px">Beim ersten Mal</h2>
+              <p style="margin:0;color:var(--muted)">SOMOS<br />Lindwurmstraße 92A<br />80337 München<br />Nähe Poccistraße, im Raum unten</p>
+              <p style="margin:24px 0 0"><a href="#">Auf der Karte ansehen</a></p>
+            </div>
+            <ul class="list">
+              <li><span class="tick"></span><span>Matten, Kissen und Decken sind da. Wenn du eine eigene Matte hast, bring sie gern mit.</span></li>
+              <li><span class="tick"></span><span>Es gibt keine Umkleide. Komm am besten schon umgezogen.</span></li>
+              <li><span class="tick"></span><span>Sei etwa fünf Minuten vorher da. Die Tür ist meistens offen.</span></li>
+              <li><span class="tick"></span><span>Wasser und Tee stehen bereit.</span></li>
+              <li><span class="tick"></span><span>Lieber von zuhause? Die Stunde läuft parallel über Zoom.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="wrap" style="padding-bottom:88px">
+          <div class="soft" style="text-align:center;padding-top:64px;padding-bottom:64px">
+            <h2 class="serif h2" style="margin:0 auto 22px;max-width:18ch">Nächster Mittwoch, 19:30 Uhr.</h2>
+            <a class="btn" href="#">Für Mittwoch anmelden</a>
+            <p style="margin:18px 0 0;color:var(--muted);font-size:16px">Kein Konto nötig. Name, Mail, fertig.</p>
+          </div>
+        </div>
+
+        <div class="wrap">
+          <div class="foot">
+            <div class="mark">BEE ACTIVE</div>
+            <div style="display:flex;gap:24px;flex-wrap:wrap">
+              <a href="#">Kontakt</a>
+              <a href="#">Instagram</a>
+              <a href="#">Impressum</a>
+              <a href="#">Datenschutz</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="stickybar">
+          <a class="btn" href="#">Für Mittwoch anmelden</a>
+        </div>
+      </div>
+    </x-dc>
+    <script
+      type="text/x-dc"
+      data-dc-script
+      data-props='{}'
+    >
+      class Component extends DCLogic {
+        renderVals() { return {}; }
+      }
+    </script>
+  </body>
+</html>
