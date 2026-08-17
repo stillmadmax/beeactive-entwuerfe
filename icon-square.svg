@@ -1,0 +1,24 @@
+<!-- Raster source for apple-touch-icon.png: full-bleed and without rounding of
+     its own, because iOS applies its own mask. Not referenced directly.
+     Dark ground on purpose: the site's cream is too low in contrast for a 16px
+     browser tab, and both tones come from the site palette either way. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#3A2E26" />
+  <g transform="translate(256 336) scale(1.18) translate(-256 -336)">
+    <!-- Outer petals in rose -->
+    <path d="M256 372 C205 320 205 232 256 162 C307 232 307 320 256 372 Z"
+          fill="#A87A70" transform="rotate(-62 256 372)" />
+    <path d="M256 372 C205 320 205 232 256 162 C307 232 307 320 256 372 Z"
+          fill="#A87A70" transform="rotate(62 256 372)" />
+    <!-- Middle petals in clay -->
+    <path d="M256 372 C201 312 201 214 256 134 C311 214 311 312 256 372 Z"
+          fill="#D9C4AE" transform="rotate(-32 256 372)" />
+    <path d="M256 372 C201 312 201 214 256 134 C311 214 311 312 256 372 Z"
+          fill="#D9C4AE" transform="rotate(32 256 372)" />
+    <!-- Centre petal in cream, the brightest element so the shape reads small -->
+    <path d="M256 372 C198 300 198 190 256 104 C314 190 314 300 256 372 Z"
+          fill="#FCF8F1" />
+    <!-- Water line under the blossom -->
+    <path d="M144 402 H368" stroke="#EADDC9" stroke-width="16" stroke-linecap="round" />
+  </g>
+</svg>
