@@ -1,0 +1,229 @@
+/* Stil der Variante 3 („C3 — Bogen"). Gleiche Palette, gleiche Wärme und
+   dieselben Texte wie Richtung C, aber zentriert komponiert: Bogenfenster
+   für Bilder und Clips, vollflächige Farbbänder statt Karten, Fakten als
+   Infoleiste mit Haarlinien, Termine als Tabellenzeilen mit Statuspunkt,
+   die Stimmen als einzelne Zwischenzitate. Cormorant Garamond statt Lora.
+   Variante 1 liegt unter ../stil.css, Variante 2 unter ../v2/stil.css. */
+:root{
+  --cream:#FCF8F1;
+  --sand:#EADDC9;
+  --clay:#D9C4AE;
+  --ink:#241D17;
+  --muted:#6F6357;
+  --rose:#A87A70;
+  --deep:#3A2E26;
+  /* Status der Termine, identisch zu Variante 1. */
+  --gruen:#3F7A46;
+  --bernstein:#8A5E10;
+  --rot:#B23B2E;
+  --max:1080px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Work Sans',system-ui,sans-serif;font-size:17.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--rose);text-decoration:none;border-bottom:1px solid rgba(168,122,112,0.4)}
+a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+img{display:block;max-width:100%}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:20px;padding-right:20px}
+.serif{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;line-height:1.08;letter-spacing:0}
+.serif em{font-style:italic;font-weight:500;color:var(--rose)}
+.h1{font-size:clamp(40px,6.6vw,84px)}
+.h2{font-size:clamp(30px,4vw,52px)}
+.h3{font-size:clamp(23px,2.4vw,30px)}
+.lede{font-size:clamp(17px,1.5vw,21px);line-height:1.65}
+.eyebrow{font-size:12px;letter-spacing:0.26em;text-transform:uppercase;color:var(--rose);font-weight:600}
+.sec{padding-top:96px;padding-bottom:96px}
+.btn{display:inline-block;background:var(--rose);color:#fff;padding:17px 30px;font-weight:600;font-size:13.5px;letter-spacing:0.08em;text-transform:uppercase;border-radius:12px;border:0;white-space:nowrap;text-align:center;cursor:pointer;font-family:inherit}
+.btn:hover{background:var(--deep);color:#fff;border:0}
+
+/* Kopfzeile: Wortmarke mittig, die Links als Zeile darunter, der Knopf
+   rechts daneben. Mobil dasselbe bewährte Muster wie in V1 und V2:
+   Wortmarke links, Links als eigene, bei Platznot scrollende Zeile. */
+.nav{position:relative;display:grid;justify-items:center;gap:12px;padding:26px 0 20px;border-bottom:1px solid rgba(217,196,174,0.6)}
+.nav .btn{position:absolute;right:0;top:22px}
+.navlinks{display:flex;gap:30px;font-size:15.5px}
+.navlinks a{border:0;color:var(--muted)}
+.navlinks a:hover{color:var(--ink)}
+.navlinks a.is-here{color:var(--ink);font-weight:500}
+.mark{font-family:'Cormorant Garamond',serif;font-weight:700;letter-spacing:0.34em;font-size:18px;color:var(--ink);white-space:nowrap}
+
+/* Bogenfenster: das Erkennungszeichen dieser Variante. Der Radius oben ist
+   groesser als die halbe Breite und wird vom Browser auf den Halbkreis
+   begrenzt, unten bleiben die Ecken sanft. */
+.bogen{position:relative;border-radius:999px 999px 22px 22px;overflow:hidden;background:var(--sand) center/cover no-repeat;margin:0}
+.bogen img{width:100%;height:100%;object-fit:cover}
+.bogen video{display:none;width:100%;height:100%;object-fit:cover;object-position:50% 60%}
+
+/* Kopf der Startseite: Text und Bogenbild nebeneinander. Mobil steht das
+   Bogenfenster oben und traegt den Clip, der Text folgt zentriert. */
+.hero3{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(32px,5vw,72px);align-items:center;padding-top:clamp(36px,5vw,72px)}
+.hero3 .h1{margin:16px 0 0}
+.hero3 .lede{color:var(--muted);max-width:44ch;margin:22px 0 0}
+.hero3 .bogen{height:clamp(440px,46vw,620px)}
+
+/* Infoleiste: die Kernfakten als ruhige Zeile mit Haarlinien. */
+.infoleiste{border-top:1px solid var(--clay);border-bottom:1px solid var(--clay);margin-top:clamp(48px,6vw,80px)}
+.infoleiste .innen{display:flex;justify-content:center;flex-wrap:wrap}
+.info{padding:20px 36px;text-align:center}
+.info + .info{border-left:1px solid rgba(217,196,174,0.7)}
+.info .wert{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;line-height:1.2}
+.info .name{font-size:11.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+
+/* Vollflaechige Farbbaender statt Karten. */
+.band{padding:clamp(56px,7vw,96px) 0}
+.band.sand{background:var(--sand)}
+.band.weiss{background:#fff}
+
+/* Zentrierte Textbloecke: die Ueberschrift mittig, das Maß am Text. */
+.mittig{text-align:center}
+.mittig .eyebrow{display:block}
+.mittig .h1,.mittig .h2,.mittig .h3{margin-left:auto;margin-right:auto}
+.spalte{max-width:52ch;margin-left:auto;margin-right:auto}
+
+/* Eine Stimme als Zwischenzitat, statt drei Karten in einem Block. */
+.stimme{text-align:center;max-width:36ch;margin:0 auto;padding:clamp(64px,8vw,104px) 20px}
+.stimme::before{content:"„";font-family:'Cormorant Garamond',Georgia,serif;font-size:58px;line-height:0.4;color:var(--rose);display:block;margin-bottom:16px}
+.stimme p{font-family:'Cormorant Garamond',serif;font-size:clamp(23px,2.6vw,32px);font-weight:500;font-style:italic;line-height:1.35;margin:0}
+.qname{margin-top:18px;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose);font-weight:600}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,72px);align-items:center}
+.rund{border-radius:22px;object-fit:cover;width:100%}
+.list{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.list li{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:start}
+.tick{width:10px;height:10px;border-radius:50%;border:2px solid var(--rose);background:transparent;margin-top:8px}
+.quali{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;justify-content:center}
+.quali span{border:1px solid var(--clay);padding:8px 16px;font-size:14px;border-radius:999px;color:var(--ink)}
+
+/* Bewegtbild: gleiche Regeln wie V1 und V2, die Clips liegen unter ../video/.
+   Der breite Rahmen fuer den liegenden Clip auf der Startseite. */
+.klipp{position:relative;overflow:hidden;border-radius:22px;background:var(--sand) center/cover no-repeat;margin:0}
+.klipp video{display:block;width:100%;height:100%;object-fit:cover}
+.klipp.wiebild{height:440px}
+.klipp.wiebild video{object-position:50% 75%}
+/* Der stehende Clip auf der Angebotsseite bekommt das Bogenfenster. */
+.bogen.aufrecht{aspect-ratio:4/5}
+.bogen.aufrecht video{display:block;object-position:50% 45%}
+
+/* Abschlussband und Fusszeile, beides zentriert. */
+.schluss3 .gross{font-size:clamp(32px,4.6vw,60px);max-width:20ch;margin:16px auto 0}
+.hinweis{font-size:15px;color:var(--muted)}
+.foot3{text-align:center;border-top:1px solid rgba(217,196,174,0.7);padding:44px 20px 28px}
+.foot3 .mark{display:block;margin-bottom:18px}
+.foot3 .zeile{display:flex;justify-content:center;flex-wrap:wrap;gap:12px 26px;font-size:15px;color:var(--muted)}
+.foot3 .zeile + .zeile{margin-top:12px}
+.foot3 a{border:0;color:var(--muted)}
+.foot3 a:hover{color:var(--ink)}
+.stickybar{display:none}
+
+/* Die Luft unter der letzten Zeile muss im Inhalt liegen, nicht als Marge:
+   das dc-Runtime rendert in einen eigenen Container, dessen Inhalt
+   ueberlaeuft, und Margen zaehlen dort nicht zum Scrollbereich. Mobil
+   schafft derselbe Spacer den Platz fuer die Sticky-Leiste. */
+[data-screen-label]::after{content:"";display:block;height:12px}
+
+/* Unterseitenkopf, zentriert. */
+.pagehead{padding-top:52px;padding-bottom:8px;text-align:center}
+.pagehead .h1{max-width:18ch;margin-left:auto;margin-right:auto}
+.pagehead .lede{margin-left:auto;margin-right:auto}
+
+/* Anmeldeseite: Termine als Tabellenzeilen mit Haarlinien, der Status als
+   Punkt mit Text statt Pille. */
+.termine{border-top:1px solid var(--clay)}
+.trow{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1.9fr) auto;gap:6px 24px;align-items:center;padding:20px 16px;border-bottom:1px solid rgba(217,196,174,0.7)}
+.trow .wann{font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:600;line-height:1.2}
+.trow .wo{color:var(--muted);font-size:15px}
+.trow.is-off{background:#FBF0EE}
+.trow.is-off .wann{opacity:0.6}
+.trow.is-online{background:#FAF5EA}
+.status{font-size:14px;font-weight:600;white-space:nowrap;justify-self:end;display:inline-flex;align-items:center;gap:8px}
+.status::before{content:"";width:9px;height:9px;border-radius:50%;background:currentColor;flex:none}
+.status.frei{color:var(--gruen)}
+.status.voll{color:var(--bernstein)}
+.status.aus{color:var(--rot)}
+.mehr{margin-top:14px}
+.mehr summary{display:block;cursor:pointer;color:var(--rose);font-size:16px;padding:14px 0;text-align:center}
+.mehr summary::-webkit-details-marker{display:none}
+.mehr summary::before{content:"+ ";font-weight:600}
+.mehr[open] summary::before{content:"– "}
+.mehr summary:hover{color:var(--ink)}
+.mehr[open] .termine{margin-top:4px}
+
+/* Formular: offene Linienfelder statt weisser Kaesten. */
+.feld{display:grid;gap:6px;margin-bottom:22px}
+.feld label{font-size:15px;color:var(--muted)}
+.feld input{font:inherit;font-size:17px;padding:10px 2px;border:0;border-bottom:1px solid var(--clay);border-radius:0;background:transparent;color:var(--ink);width:100%}
+.feld input:focus{outline:none;border-bottom-color:var(--rose);box-shadow:0 1px 0 var(--rose)}
+.optionen{display:flex;gap:8px;flex-wrap:wrap}
+.opt{border:1px solid var(--clay);background:transparent;border-radius:10px;padding:9px 16px;font-size:15px;font-family:inherit;color:var(--ink);cursor:pointer}
+.opt:hover{border-color:var(--rose)}
+.opt.is-on{background:var(--rose);border-color:var(--rose);color:#fff}
+.opt[disabled]{cursor:default}
+.opt.is-voll{color:var(--bernstein);border-color:rgba(138,94,16,0.45)}
+.opt.is-voll:hover{border-color:var(--bernstein)}
+.opt.is-aus{color:var(--rot);border-color:rgba(178,59,46,0.3);text-decoration:line-through}
+.opt.is-aus:hover{border-color:rgba(178,59,46,0.3)}
+
+/* Angebotsseite: roemische Ziffern und offene Preise statt Preiskarten. */
+.rn{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(38px,4.6vw,58px);font-weight:600;color:var(--clay);line-height:1}
+.preis{font-family:'Cormorant Garamond',serif;font-size:clamp(25px,2.7vw,33px);font-weight:600;line-height:1.25}
+.preis .neben{display:block;font-family:'Work Sans',system-ui,sans-serif;font-size:15px;font-weight:400;color:var(--muted);margin-top:6px}
+
+/* Ueber mich: Ausbildung als Tabellenzeilen. */
+.ausb{border-top:1px solid var(--clay)}
+.arow{display:grid;grid-template-columns:130px 1fr;gap:4px 20px;padding:16px 4px;border-bottom:1px solid rgba(217,196,174,0.7);align-items:baseline}
+.arow .jahr{font-size:13px;letter-spacing:0.16em;text-transform:uppercase;color:var(--rose);font-weight:600}
+.arow .was{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600}
+.arow .wobei{color:var(--muted);font-size:15px}
+
+/* Kontaktseite: die zwei Wege untereinander, durch Haarlinien getrennt. */
+.weg3{text-align:center;padding:36px 20px;border-bottom:1px solid rgba(217,196,174,0.7)}
+.weg3:first-child{border-top:1px solid var(--clay)}
+.weg3 .h3{margin:10px 0 6px}
+.weg3 a.gross{border:0;color:inherit}
+
+@media (max-width:880px){
+  .two{grid-template-columns:1fr;gap:32px}
+  .hero3{grid-template-columns:1fr;gap:28px;padding-top:16px}
+  .hero3 .media{order:-1}
+  .hero3 .text{text-align:center}
+  .hero3 .lede{margin-left:auto;margin-right:auto}
+  .pagehead{padding-top:28px}
+  .sec{padding-top:56px;padding-bottom:56px}
+  /* Kopfzeile wie in V1 und V2: Wortmarke links, Links als eigene, bei
+     Platznot waagerecht scrollende Zeile. Kein Burger, kein JavaScript. */
+  .nav{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;row-gap:10px;padding:16px 0;border-bottom:1px solid rgba(217,196,174,0.6)}
+  .nav .btn{position:static;margin-left:auto}
+  .navlinks{order:3;width:100%;gap:20px;font-size:15px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .navlinks::-webkit-scrollbar{display:none}
+  .navlinks a{white-space:nowrap}
+  .mark{letter-spacing:0.22em;font-size:16px}
+  .arow{grid-template-columns:1fr}
+}
+@media (max-width:700px){
+  /* Ohne diesen Platz verdeckt die Sticky-Leiste die letzten Zeilen. */
+  [data-screen-label]::after{height:120px}
+  body.ohne-sticky [data-screen-label]::after{height:12px}
+  .nav .btn{display:none}
+  .hero3 .bogen{height:480px}
+  .hero3 .bogen video{display:block}
+  .hero3 .bogen img{display:none}
+  .infoleiste .innen{display:grid;grid-template-columns:1fr 1fr}
+  .info{padding:16px 10px}
+  .info + .info{border-left:0}
+  .info:nth-child(even){border-left:1px solid rgba(217,196,174,0.7)}
+  .info:nth-child(n+3){border-top:1px solid rgba(217,196,174,0.7)}
+  .rund{height:300px !important}
+  .klipp.wiebild{height:300px}
+  .trow{grid-template-columns:1fr;gap:4px}
+  .trow .status{justify-self:start;margin-top:6px}
+  .foot3 .zeile{gap:10px 18px}
+  .stickybar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--cream);border-top:1px solid var(--clay);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+  .stickybar .btn{display:block;width:100%;padding:16px 20px}
+  /* Buttons und Bloecke, die mobil dasselbe sagen wie die Sticky-Leiste. */
+  .nur-desktop{display:none}
+}
+/* Wer Bewegung abgestellt hat, bekommt Standbilder. */
+@media (prefers-reduced-motion:reduce){
+  .klipp video{display:none}
+  .bogen video{display:none}
+  .bogen img{display:block}
+}

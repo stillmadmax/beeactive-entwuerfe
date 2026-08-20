@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+    <title>Anmelden · Bee Active · Entwurf 3</title>
+    <script src="../support.js"></script>
+  </head>
+  <body class="ohne-sticky">
+    <x-dc>
+      <helmet data-dc-atomics>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="./stil.css" />
+      </helmet>
+
+      <div data-screen-label="Anmelden · Variante 3">
+        <div class="wrap">
+          <div class="nav">
+            <div class="mark"><a href="./" style="border:0;color:inherit">BEE ACTIVE</a></div>
+            <div class="navlinks">
+              <a class="is-here" href="./anmelden.dc.html">Anmelden</a>
+              <a href="./angebot.dc.html">Angebot</a>
+              <a href="./ueber-mich.dc.html">Über mich</a>
+              <a href="./kontakt.dc.html">Kontakt</a>
+            </div>
+            <a class="btn" href="#formular">Zum Formular</a>
+          </div>
+        </div>
+
+        <div class="wrap pagehead">
+          <div class="eyebrow">Dynamic Yoga, mittwochs 19:30</div>
+          <h1 class="serif h1" style="margin:14px auto 0;font-size:clamp(34px,4.8vw,60px)">Jeder Mittwoch ist <em>deiner</em></h1>
+          <p class="lede" style="margin:18px auto 0;color:var(--muted);max-width:46ch">
+            Einstieg jederzeit, auch mitten im Jahr, und für so viele Mittwoche, wie du magst.
+            Kein Konto, kein Abo. Name, Mail, fertig.
+          </p>
+        </div>
+
+        <div class="wrap" style="padding-top:44px;padding-bottom:64px">
+          <div class="termine">
+            <sc-for list="{{ termine }}" as="t">
+              <div class="{{ t.cls }}">
+                <div class="wann">{{ t.wann }}</div>
+                <div class="wo">{{ t.wo }}</div>
+                <div class="{{ t.statusCls }}">{{ t.status }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <details class="mehr">
+            <summary>Vier weitere Mittwoche</summary>
+            <div class="termine">
+              <sc-for list="{{ spaeter }}" as="t">
+                <div class="{{ t.cls }}">
+                  <div class="wann">{{ t.wann }}</div>
+                  <div class="wo">{{ t.wo }}</div>
+                  <div class="{{ t.statusCls }}">{{ t.status }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </details>
+          <p class="hinweis" style="margin:20px 0 0;text-align:center">
+            Anmelden kannst du dich bis 18:30 Uhr am Kurstag, dann weiß ich rechtzeitig, wer dabei ist.
+          </p>
+        </div>
+
+        <div class="band weiss" id="formular">
+          <div class="wrap">
+            <div class="two" style="align-items:start">
+              <div>
+                <div class="eyebrow">Deine Anmeldung</div>
+                <h2 class="serif h2" style="margin:14px 0 6px">Melde dich <em>an</em></h2>
+                <p class="hinweis" style="margin:0 0 30px">19 Euro oder Wellpass · 60 Minuten</p>
+
+                <div class="feld">
+                  <label for="name">Name</label>
+                  <input id="name" type="text" placeholder="Wie soll ich dich nennen?" />
+                </div>
+                <div class="feld">
+                  <label for="mail">E-Mail</label>
+                  <input id="mail" type="email" placeholder="für die Bestätigung" />
+                </div>
+                <div class="feld">
+                  <label>Welcher Mittwoch?</label>
+                  <div class="optionen" style="margin-top:8px">
+                    <sc-for list="{{ pillen }}" as="t">
+                      <sc-if value="{{ t.offen }}">
+                        <button class="{{ t.pille }}" type="button">{{ t.kurz }}</button>
+                      </sc-if>
+                      <sc-if value="{{ t.zu }}">
+                        <button class="{{ t.pille }}" type="button" disabled>{{ t.kurz }}</button>
+                      </sc-if>
+                    </sc-for>
+                  </div>
+                </div>
+                <div class="feld">
+                  <label>Vor Ort oder online?</label>
+                  <div class="optionen" style="margin-top:8px">
+                    <button class="opt is-on" type="button">Vor Ort</button>
+                    <button class="opt" type="button">Online</button>
+                  </div>
+                  <p class="hinweis" style="margin:10px 0 0">Den Zoom-Link bekommst du mit der Bestätigungsmail.
+                    An ausgebuchten Mittwochen bleibt nur Online wählbar, über Zoom ist immer Platz.</p>
+                </div>
+                <div class="feld">
+                  <label>Wie zahlst du?</label>
+                  <div class="optionen" style="margin-top:8px">
+                    <button class="opt is-on" type="button">PayPal</button>
+                    <button class="opt" type="button">Bar vor Ort</button>
+                    <button class="opt" type="button">Wellpass, nur vor Ort</button>
+                  </div>
+                </div>
+                <button class="btn" type="button" style="width:100%;margin-top:10px">Jetzt anmelden</button>
+                <p class="hinweis" style="margin:16px 0 0">
+                  Mit der Anmeldung stimmst du der <a href="#">Datenschutzerklärung</a> zu. Ich speichere nur Name und Mail, und nur bis der Termin vorbei ist.
+                </p>
+              </div>
+              <div>
+                <div class="eyebrow">Was danach passiert</div>
+                <ul class="list" style="margin-top:18px">
+                  <li><span class="tick"></span><span>Du bekommst sofort eine Mail mit Termin und Adresse, bei Online mit dem Zoom-Link.</span></li>
+                  <li><span class="tick"></span><span>In derselben Mail ist ein Abmeldelink. Ein Klick, fertig, kein Konto nötig.</span></li>
+                  <li><span class="tick"></span><span>Am Vortag kommt eine kurze Erinnerung.</span></li>
+                  <li><span class="tick"></span><span>In der Mail steht die PayPal-Adresse. Am liebsten zahlst du vorab, aber PayPal geht auch noch vor Ort. Bar vor Ort genauso.</span></li>
+                  <li><span class="tick"></span><span>Wellpass gilt nur vor Ort. Du scannst vor der Stunde wie gewohnt den QR-Code in der Wellpass-App und zahlst nichts. Anmelden musst du dich hier trotzdem. Über Zoom kostet die Stunde 19 Euro.</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap sec">
+          <div class="two" style="align-items:start">
+            <div>
+              <div class="eyebrow">Erstes Mal dabei?</div>
+              <h2 class="serif h2" style="margin:14px 0 0">Was du zur Mittwochsstunde <em>wissen musst</em></h2>
+            </div>
+            <div>
+              <ul class="list" style="margin-top:6px">
+                <li><span class="tick"></span><span>Matten, Kissen und Decken sind da. Eigene Matte gern mitbringen.</span></li>
+                <li><span class="tick"></span><span>Es gibt keine Umkleide, komm am besten schon umgezogen.</span></li>
+                <li><span class="tick"></span><span>Etwa fünf Minuten vorher da sein.</span></li>
+                <li><span class="tick"></span><span>Der Eingang ist im Hinterhof. Dort bei „SOMOS Kursräume" klingeln, dann mache ich auf.</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="band sand mittig">
+          <div class="wrap">
+            <div class="eyebrow">Mini Yoga Retreat</div>
+            <h2 class="serif h2" style="margin:14px auto 16px;max-width:22ch">Derzeit ist kein Retreat geplant</h2>
+            <p style="margin:0 auto;max-width:46ch">Vier Stunden mit Meditation, langem Flow, Kuchen und Shavasana, 85 Euro. Sobald ein Termin steht, taucht er hier auf. Wenn du Interesse hast, <a href="mailto:beeactive@mailbox.org?subject=Interesse%20am%20Mini%20Yoga%20Retreat">schreib mir kurz</a>. Sobald genug zusammenkommen, plane ich einen.</p>
+          </div>
+        </div>
+
+        <div class="foot3">
+          <span class="mark">BEE ACTIVE</span>
+          <div class="zeile">
+            <a href="./">Start</a>
+            <a href="./anmelden.dc.html">Anmelden</a>
+            <a href="./angebot.dc.html">Angebot</a>
+            <a href="./ueber-mich.dc.html">Über mich</a>
+            <a href="./kontakt.dc.html">Kontakt</a>
+          </div>
+          <div class="zeile">
+            <a href="https://www.instagram.com/beeactive_muenchen/">Instagram</a>
+            <a href="#">Impressum</a>
+            <a href="#">Datenschutz</a>
+          </div>
+        </div>
+      </div>
+    </x-dc>
+    <script
+      type="text/x-dc"
+      data-dc-script
+      data-props='{}'
+    >
+      class Component extends DCLogic {
+        // Erzeugt die nächsten acht Mittwoche aus dem heutigen Datum, damit der
+        // Entwurf nicht altert. Gleiche Logik und Felder wie in Variante 1.
+        // Nur fürs Mockup.
+        renderVals() {
+          const MITTWOCH = 3;
+          const jetzt = new Date();
+          const heute = new Date(jetzt.getFullYear(), jetzt.getMonth(), jetzt.getDate());
+
+          // Anmeldeschluss 18:30: danach ist der heutige Mittwoch keine Option mehr.
+          const schlussVorbei = jetzt.getDay() === MITTWOCH &&
+            (jetzt.getHours() > 18 || (jetzt.getHours() === 18 && jetzt.getMinutes() >= 30));
+
+          const erster = new Date(heute);
+          let tageBisMittwoch = (MITTWOCH - heute.getDay() + 7) % 7;
+          if (tageBisMittwoch === 0 && schlussVorbei) tageBisMittwoch = 7;
+          erster.setDate(heute.getDate() + tageBisMittwoch);
+
+          const alle = [];
+          for (let i = 0; i < 8; i++) {
+            const tag = new Date(erster);
+            tag.setDate(erster.getDate() + i * 7);
+            const datum = tag.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' });
+            // Drei Zustände: frei, vor Ort ausgebucht, abgesagt. Fest
+            // verdrahtete Beispiele wie in Variante 1.
+            const abgesagt = i === 2;
+            const voll = i === 1;
+            alle.push({
+              cls: abgesagt ? 'trow is-off' : voll ? 'trow is-online' : 'trow',
+              // Der erste Eintrag ist immer der nächstliegende Mittwoch,
+              // deshalb trägt nur er die Zusatzangabe.
+              wann: (i > 0 ? 'Mittwoch, ' : tageBisMittwoch === 0 ? 'Heute, Mittwoch, ' : 'Diesen Mittwoch, ') + datum,
+              wo: abgesagt
+                ? 'Fällt aus, Bine ist im Urlaub'
+                : voll
+                  ? '19:30–20:30 · Vor Ort ausgebucht, über Zoom ist noch Platz'
+                  : '19:30–20:30 · SOMOS, Lindwurmstraße 92A · auch per Zoom',
+              status: abgesagt ? 'Abgesagt' : voll ? 'Nur noch online' : 'Platz frei',
+              statusCls: 'status ' + (abgesagt ? 'aus' : voll ? 'voll' : 'frei'),
+              // Ausgebuchte Mittwoche bleiben wählbar, nur eben online.
+              offen: !abgesagt,
+              zu: abgesagt,
+              // Kurzform für die Auswahlfelder im Formular.
+              kurz: tag.toLocaleDateString('de-DE', { day: 'numeric', month: 'short' }),
+              // Der Renderer im Mockup gibt disabled nicht mit aus, deshalb
+              // trägt das Feld seinen Zustand zusätzlich als Klasse.
+              pille: abgesagt ? 'opt is-aus' : voll ? 'opt is-voll' : 'opt',
+            });
+          }
+
+          // Vorausgewählt ist der erste buchbare Mittwoch.
+          const ersterOffener = alle.find((t) => t.offen);
+          if (ersterOffener) ersterOffener.pille = 'opt is-on';
+
+          return {
+            termine: alle.slice(0, 4),
+            spaeter: alle.slice(4),
+            pillen: alle,
+          };
+        }
+      }
+    </script>
+  </body>
+</html>
