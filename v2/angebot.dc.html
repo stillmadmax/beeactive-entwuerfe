@@ -4,36 +4,38 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
-    <title>Angebot & Preise · Bee Active</title>
-    <script src="./support.js"></script>
-    <script src="./klipps.js" defer></script>
+    <title>Angebot &amp; Preise · Bee Active · Entwurf 2</title>
+    <script src="../support.js"></script>
+    <script src="../klipps.js" defer></script>
   </head>
   <body>
     <x-dc>
       <helmet data-dc-atomics>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="./stil.css" />
       </helmet>
 
-      <div data-screen-label="Angebot & Preise">
-        <div class="wrap">
-          <div class="nav">
-            <div class="mark"><a href="./" style="border:0;color:inherit">BEE ACTIVE</a></div>
-            <div class="navlinks">
-              <a href="./anmelden.dc.html">Anmelden</a>
-              <a class="is-here" href="./angebot.dc.html">Angebot</a>
-              <a href="./ueber-mich.dc.html">Über mich</a>
-              <a href="./kontakt.dc.html">Kontakt</a>
+      <div data-screen-label="Angebot & Preise · Variante 2">
+        <div class="topbar">
+          <div class="wrap">
+            <div class="nav">
+              <div class="mark"><a href="./" style="border:0;color:inherit">BEE ACTIVE</a></div>
+              <div class="navlinks">
+                <a href="./anmelden.dc.html">Anmelden</a>
+                <a class="is-here" href="./angebot.dc.html">Angebot</a>
+                <a href="./ueber-mich.dc.html">Über mich</a>
+                <a href="./kontakt.dc.html">Kontakt</a>
+              </div>
+              <a class="btn" href="./anmelden.dc.html">Für Mittwoch anmelden</a>
             </div>
-            <a class="btn" href="./anmelden.dc.html">Für Mittwoch anmelden</a>
           </div>
         </div>
 
         <div class="wrap pagehead">
           <div class="eyebrow">Angebot &amp; Preise</div>
-          <h1 class="serif h1" style="margin:14px 0 0;font-size:clamp(30px,4.4vw,54px)">Drei Wege, mit mir zu üben</h1>
+          <h1 class="serif h1" style="margin:14px 0 0;font-size:clamp(30px,4.4vw,54px)">Drei Wege, <em>mit mir zu üben</em></h1>
           <p class="lede" style="margin:18px 0 0;color:var(--muted);max-width:48ch">
             Die wöchentliche Stunde ist das Herzstück. Dazu kommen ein paar Mal im Jahr die
             Retreats und, wenn du es ganz auf dich zugeschnitten möchtest, Personal Training.
@@ -43,16 +45,16 @@
         <div class="wrap" style="padding-top:44px;padding-bottom:72px">
           <div class="two">
             <div>
-              <!-- Clip 1 steht hier, damit jeder der drei Clips genau einmal
-                   vorkommt. Das hochformatige Fenster, weil Bine darin steht
-                   und sich vorbeugt. -->
-              <figure class="klipp wiebild aufrecht" style="background-image:url(./video/bine-1.jpg)">
-                <video src="./video/bine-1.mp4" autoplay loop muted playsinline preload="metadata" aria-label="Vorbeuge und Stuhl im Kursraum, stummer Clip"></video>
+              <!-- Clip 1 wie in Variante 1, hochformatiges Fenster, weil Bine
+                   darin steht und sich vorbeugt. -->
+              <figure class="klipp wiebild aufrecht" style="background-image:url(../video/bine-1.jpg)">
+                <video src="../video/bine-1.mp4" autoplay loop muted playsinline preload="metadata" aria-label="Vorbeuge und Stuhl im Kursraum, stummer Clip"></video>
               </figure>
             </div>
             <div>
-              <div class="eyebrow">Jeden Mittwoch</div>
-              <h2 class="serif h2" style="margin:14px 0 16px">Dynamic Yoga</h2>
+              <div class="nr">01</div>
+              <div class="eyebrow" style="margin-top:14px">Jeden Mittwoch</div>
+              <h2 class="serif h2" style="margin:12px 0 16px">Dynamic <em>Yoga</em></h2>
               <p style="margin:0">60 Minuten, jeden Mittwoch um 19:30 Uhr. Ein durchgehender Flow
                 aus aufwärmenden und kräftigenden Haltungen, mit fest eingeplanter Entspannung
                 am Ende.</p>
@@ -62,9 +64,10 @@
                 abgedeckt. Du scannst wie gewohnt den QR-Code in der Wellpass-App und zahlst nichts.
                 Über Zoom gilt Wellpass nicht, da kostet die Stunde 19 Euro. Anmelden musst du dich
                 hier immer, damit ich weiß, wie viele kommen.</p>
-              <div class="preis" style="margin-top:26px">
-                19 Euro pro Stunde
-                <span class="neben">oder kostenfrei über Wellpass, vor Ort · Einstieg jederzeit, keine Mitgliedschaft</span>
+              <div class="preiskarte" style="margin-top:26px">
+                <div class="preis">19 Euro pro Stunde
+                  <span class="neben">oder kostenfrei über Wellpass, vor Ort · Einstieg jederzeit, keine Mitgliedschaft</span>
+                </div>
               </div>
               <p class="nur-desktop" style="margin:26px 0 0"><a class="btn" href="./anmelden.dc.html">Für Mittwoch anmelden</a></p>
             </div>
@@ -75,16 +78,18 @@
           <div class="soft">
             <div class="two" style="align-items:start">
               <div>
-                <div class="eyebrow">Ein paar Mal im Jahr</div>
-                <h2 class="serif h2" style="margin:14px 0 16px">Mini Yoga Retreat</h2>
+                <div class="nr">02</div>
+                <div class="eyebrow" style="margin-top:14px">Ein paar Mal im Jahr</div>
+                <h2 class="serif h2" style="margin:12px 0 16px">Mini Yoga <em>Retreat</em></h2>
                 <p style="margin:0;max-width:44ch">Vier Stunden aussteigen, ohne wegzufahren. Kleine
                   Gruppe, viel Zeit, und am Ende geht niemand gehetzt nach Hause.</p>
                 <p style="margin:16px 0 0;max-width:44ch">Gerade ist keiner geplant. Wenn du Interesse
                   hast, <a href="mailto:beeactive@mailbox.org?subject=Interesse%20am%20Mini%20Yoga%20Retreat">schreib
                   mir kurz</a>. Sobald genug zusammenkommen, plane ich einen.</p>
-                <div class="preis" style="margin-top:26px">
-                  85 Euro
-                  <span class="neben">4 Stunden · Termine stehen auf der Anmeldeseite, sobald einer geplant ist</span>
+                <div class="preiskarte" style="margin-top:26px">
+                  <div class="preis">85 Euro
+                    <span class="neben">4 Stunden · Termine stehen auf der Anmeldeseite, sobald einer geplant ist</span>
+                  </div>
                 </div>
               </div>
               <div>
@@ -105,8 +110,9 @@
         <div class="wrap" style="padding-bottom:72px">
           <div class="two" style="align-items:start">
             <div>
-              <div class="eyebrow">Ganz auf dich zugeschnitten</div>
-              <h2 class="serif h2" style="margin:14px 0 16px">Personal Training</h2>
+              <div class="nr">03</div>
+              <div class="eyebrow" style="margin-top:14px">Ganz auf dich zugeschnitten</div>
+              <h2 class="serif h2" style="margin:12px 0 16px">Personal <em>Training</em></h2>
               <p style="margin:0;max-width:44ch">Wenn du ein konkretes Ziel hast, dich nach einer
                 Verletzung herantasten willst oder lieber ohne Gruppe übst. Wir starten mit einem
                 kostenlosen Kennenlernen und einer Anamnese. Danach entscheidest du in Ruhe.</p>
@@ -115,13 +121,15 @@
               <p style="margin:24px 0 0"><a href="mailto:beeactive@mailbox.org?subject=Personal%20Training">Schreib mir kurz, was du suchst</a></p>
             </div>
             <div>
-              <div class="preis">
-                80 Euro vor Ort · 70 Euro online
-                <span class="neben">je Einheit</span>
+              <div class="preiskarte">
+                <div class="preis">80 Euro vor Ort · 70 Euro online
+                  <span class="neben">je Einheit</span>
+                </div>
               </div>
-              <div class="preis" style="margin-top:22px">
-                380 Euro · 320 Euro
-                <span class="neben">als Fünferblock, vor Ort bzw. online</span>
+              <div class="preiskarte" style="margin-top:14px">
+                <div class="preis">380 Euro · 320 Euro
+                  <span class="neben">als Fünferblock, vor Ort bzw. online</span>
+                </div>
               </div>
               <div class="quali" style="margin-top:26px">
                 <span>Kennenlernen kostenlos</span>
@@ -140,7 +148,7 @@
             <a href="mailto:beeactive@mailbox.org?subject=Gutschein">Gutschein anfragen</a></p>
         </div>
 
-        <div class="wrap" style="padding-bottom:88px">
+        <div class="wrap" style="padding-bottom:56px">
           <p class="hinweis" style="margin:0;max-width:60ch">
             Alle Preise sind Endpreise. Umsatzsteuerbefreit nach § 19 UStG (Kleinunternehmerregelung),
             deshalb wird keine Umsatzsteuer ausgewiesen. Bezahlt wird per PayPal an
@@ -148,28 +156,26 @@
           </p>
         </div>
 
-        <div class="wrap nur-desktop" style="padding-bottom:88px">
-          <div class="soft" style="text-align:center;padding-top:64px;padding-bottom:64px">
-            <h2 class="serif h2" style="margin:0 auto 22px;max-width:18ch">{{ naechster }}</h2>
-            <a class="btn" href="./anmelden.dc.html">Für Mittwoch anmelden</a>
-            <p style="margin:18px 0 0;color:var(--muted);font-size:16px">Kein Konto nötig. Name, Mail, fertig.</p>
-          </div>
-        </div>
-
-        <div class="wrap">
-          <div class="foot">
-            <div class="mark">BEE ACTIVE</div>
-            <div class="footlinks">
-              <a href="./">Start</a>
-              <a href="./anmelden.dc.html">Anmelden</a>
-              <a href="./angebot.dc.html">Angebot</a>
-              <a href="./ueber-mich.dc.html">Über mich</a>
-              <a href="./kontakt.dc.html">Kontakt</a>
-            </div>
-            <div class="footlinks">
-              <a href="https://www.instagram.com/beeactive_muenchen/">Instagram</a>
-              <a href="#">Impressum</a>
-              <a href="#">Datenschutz</a>
+        <div class="schluss">
+          <div class="schluss-innen">
+            <div class="eyebrow">Der nächste Termin</div>
+            <h2 class="serif gross">{{ naechster }}</h2>
+            <p class="nur-desktop" style="margin:28px 0 0"><a class="btn hell" href="./anmelden.dc.html">Für Mittwoch anmelden</a></p>
+            <p class="hinweis" style="margin:16px 0 0">Kein Konto nötig. Name, Mail, fertig.</p>
+            <div class="foot">
+              <div class="mark">BEE ACTIVE</div>
+              <div class="footlinks">
+                <a href="./">Start</a>
+                <a href="./anmelden.dc.html">Anmelden</a>
+                <a href="./angebot.dc.html">Angebot</a>
+                <a href="./ueber-mich.dc.html">Über mich</a>
+                <a href="./kontakt.dc.html">Kontakt</a>
+              </div>
+              <div class="footlinks">
+                <a href="https://www.instagram.com/beeactive_muenchen/">Instagram</a>
+                <a href="#">Impressum</a>
+                <a href="#">Datenschutz</a>
+              </div>
             </div>
           </div>
         </div>
@@ -185,9 +191,9 @@
       data-props='{}'
     >
       class Component extends DCLogic {
-        // Datum des Abschluss-Blocks aus dem heutigen Datum gerechnet, damit
-        // der Entwurf nicht altert — gleiche Logik wie auf der Anmeldeseite,
-        // inklusive Anmeldeschluss 18:30 am Kurstag. Nur fürs Mockup.
+        // Datum des Abschlussblocks aus dem heutigen Datum gerechnet, damit
+        // der Entwurf nicht altert. Gleiche Logik wie in Variante 1. Nur fürs
+        // Mockup.
         renderVals() {
           const MITTWOCH = 3;
           const jetzt = new Date();

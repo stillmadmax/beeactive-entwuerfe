@@ -4,35 +4,37 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
-    <title>Anmelden · Bee Active</title>
-    <script src="./support.js"></script>
+    <title>Anmelden · Bee Active · Entwurf 2</title>
+    <script src="../support.js"></script>
   </head>
   <body class="ohne-sticky">
     <x-dc>
       <helmet data-dc-atomics>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="./stil.css" />
       </helmet>
 
-      <div data-screen-label="Anmelden">
-        <div class="wrap">
-          <div class="nav">
-            <div class="mark"><a href="./" style="border:0;color:inherit">BEE ACTIVE</a></div>
-            <div class="navlinks">
-              <a class="is-here" href="./anmelden.dc.html">Anmelden</a>
-              <a href="./angebot.dc.html">Angebot</a>
-              <a href="./ueber-mich.dc.html">Über mich</a>
-              <a href="./kontakt.dc.html">Kontakt</a>
+      <div data-screen-label="Anmelden · Variante 2">
+        <div class="topbar">
+          <div class="wrap">
+            <div class="nav">
+              <div class="mark"><a href="./" style="border:0;color:inherit">BEE ACTIVE</a></div>
+              <div class="navlinks">
+                <a class="is-here" href="./anmelden.dc.html">Anmelden</a>
+                <a href="./angebot.dc.html">Angebot</a>
+                <a href="./ueber-mich.dc.html">Über mich</a>
+                <a href="./kontakt.dc.html">Kontakt</a>
+              </div>
+              <a class="btn" href="#formular">Zum Formular</a>
             </div>
-            <a class="btn" href="#formular">Zum Formular</a>
           </div>
         </div>
 
         <div class="wrap pagehead">
           <div class="eyebrow">Dynamic Yoga, mittwochs 19:30</div>
-          <h1 class="serif h1" style="margin:14px 0 0;font-size:clamp(30px,4.4vw,54px)">Jeder Mittwoch ist deiner</h1>
+          <h1 class="serif h1" style="margin:14px 0 0;font-size:clamp(30px,4.4vw,54px)">Jeder Mittwoch ist <em>deiner</em></h1>
           <p class="lede" style="margin:18px 0 0;color:var(--muted);max-width:46ch">
             Einstieg jederzeit, auch mitten im Jahr, und für so viele Mittwoche, wie du magst.
             Kein Konto, kein Abo. Name, Mail, fertig.
@@ -43,7 +45,8 @@
           <div class="termine">
             <sc-for list="{{ termine }}" as="t">
               <div class="{{ t.cls }}">
-                <div>
+                <div class="blatt"><span class="tag">{{ t.tag }}</span><span class="monat">{{ t.monat }}</span></div>
+                <div class="mitte">
                   <div class="wann">{{ t.wann }}</div>
                   <div class="wo">{{ t.wo }}</div>
                 </div>
@@ -53,13 +56,12 @@
           </div>
 
           <details class="mehr">
-            <!-- Text ohne „anzeigen", damit er auch im aufgeklappten Zustand stimmt;
-                 das +/− vor der Zeile kommt aus stil.css. -->
             <summary>Vier weitere Mittwoche</summary>
             <div class="termine">
               <sc-for list="{{ spaeter }}" as="t">
                 <div class="{{ t.cls }}">
-                  <div>
+                  <div class="blatt"><span class="tag">{{ t.tag }}</span><span class="monat">{{ t.monat }}</span></div>
+                  <div class="mitte">
                     <div class="wann">{{ t.wann }}</div>
                     <div class="wo">{{ t.wo }}</div>
                   </div>
@@ -78,7 +80,7 @@
             <div class="two" style="align-items:start">
               <div>
                 <div class="eyebrow">Deine Anmeldung</div>
-                <h2 class="serif h2" style="margin:14px 0 6px">Melde dich an</h2>
+                <h2 class="serif h2" style="margin:14px 0 6px">Melde dich <em>an</em></h2>
                 <p class="hinweis" style="margin:0 0 26px">19 Euro oder Wellpass · 60 Minuten</p>
 
                 <div class="feld">
@@ -142,7 +144,7 @@
           <div class="two" style="align-items:start">
             <div>
               <div class="eyebrow">Erstes Mal dabei?</div>
-              <h2 class="serif h2" style="margin:14px 0 0">Was du zur Mittwochsstunde wissen musst</h2>
+              <h2 class="serif h2" style="margin:14px 0 0">Was du zur Mittwochsstunde <em>wissen musst</em></h2>
             </div>
             <div>
               <ul class="list" style="margin-top:6px">
@@ -155,7 +157,7 @@
           </div>
         </div>
 
-        <div class="wrap" style="padding-bottom:88px">
+        <div class="wrap" style="padding-bottom:56px">
           <div class="soft" style="max-width:640px">
             <div class="eyebrow">Mini Yoga Retreat</div>
             <h2 class="serif h2" style="margin:14px 0 16px">Derzeit ist kein Retreat geplant</h2>
@@ -163,20 +165,22 @@
           </div>
         </div>
 
-        <div class="wrap">
-          <div class="foot">
-            <div class="mark">BEE ACTIVE</div>
-            <div class="footlinks">
-              <a href="./">Start</a>
-              <a href="./anmelden.dc.html">Anmelden</a>
-              <a href="./angebot.dc.html">Angebot</a>
-              <a href="./ueber-mich.dc.html">Über mich</a>
-              <a href="./kontakt.dc.html">Kontakt</a>
-            </div>
-            <div class="footlinks">
-              <a href="https://www.instagram.com/beeactive_muenchen/">Instagram</a>
-              <a href="#">Impressum</a>
-              <a href="#">Datenschutz</a>
+        <div class="schluss knapp">
+          <div class="schluss-innen">
+            <div class="foot">
+              <div class="mark">BEE ACTIVE</div>
+              <div class="footlinks">
+                <a href="./">Start</a>
+                <a href="./anmelden.dc.html">Anmelden</a>
+                <a href="./angebot.dc.html">Angebot</a>
+                <a href="./ueber-mich.dc.html">Über mich</a>
+                <a href="./kontakt.dc.html">Kontakt</a>
+              </div>
+              <div class="footlinks">
+                <a href="https://www.instagram.com/beeactive_muenchen/">Instagram</a>
+                <a href="#">Impressum</a>
+                <a href="#">Datenschutz</a>
+              </div>
             </div>
           </div>
         </div>
@@ -189,8 +193,8 @@
     >
       class Component extends DCLogic {
         // Erzeugt die nächsten acht Mittwoche aus dem heutigen Datum, damit der
-        // Entwurf nicht altert. In der gebauten Seite kommen die Termine aus der
-        // Serienregel im Admin. Dieser Code ist nur fürs Mockup.
+        // Entwurf nicht altert. Gleiche Logik wie in Variante 1; zusätzlich
+        // Tag und Monat einzeln für das Datumsblatt. Nur fürs Mockup.
         renderVals() {
           const MITTWOCH = 3;
           const jetzt = new Date();
@@ -209,18 +213,17 @@
           for (let i = 0; i < 8; i++) {
             const tag = new Date(erster);
             tag.setDate(erster.getDate() + i * 7);
-            const datum = tag.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' });
-            // Drei Zustände: frei, vor Ort ausgebucht, abgesagt. Hier fest
-            // verdrahtete Beispiele; in der gebauten Seite kommt „ausgebucht"
-            // aus der Platzzahl und „abgesagt" von Bine. Ausgebucht heißt immer
-            // nur vor Ort — über Zoom gibt es keine Platzgrenze.
+            // Drei Zustände: frei, vor Ort ausgebucht, abgesagt. Fest
+            // verdrahtete Beispiele wie in Variante 1.
             const abgesagt = i === 2;
             const voll = i === 1;
             alle.push({
               cls: abgesagt ? 'termin is-off' : voll ? 'termin is-online' : 'termin',
-              // Der erste Eintrag ist immer der nächstliegende Mittwoch, höchstens
-              // sechs Tage entfernt. Deshalb trägt nur er die Zusatzangabe.
-              wann: (i > 0 ? 'Mittwoch, ' : tageBisMittwoch === 0 ? 'Heute, Mittwoch, ' : 'Diesen Mittwoch, ') + datum,
+              // Das Datum steht im Blatt, die Zeile daneben trägt nur noch die
+              // Einordnung. Nur der erste Eintrag bekommt die Zusatzangabe.
+              tag: String(tag.getDate()),
+              monat: tag.toLocaleDateString('de-DE', { month: 'short' }).replace('.', ''),
+              wann: i > 0 ? 'Mittwoch' : tageBisMittwoch === 0 ? 'Heute, Mittwoch' : 'Diesen Mittwoch',
               wo: abgesagt
                 ? 'Fällt aus, Bine ist im Urlaub'
                 : voll
@@ -231,8 +234,7 @@
               // Ausgebuchte Mittwoche bleiben wählbar, nur eben online.
               offen: !abgesagt,
               zu: abgesagt,
-              // Kurzform für die Auswahlpillen im Formular, dort ist kein Platz
-              // für den ganzen Datumsnamen.
+              // Kurzform für die Auswahlpillen im Formular.
               kurz: tag.toLocaleDateString('de-DE', { day: 'numeric', month: 'short' }),
               // Der Renderer im Mockup gibt disabled nicht mit aus, deshalb
               // trägt die Pille ihren Zustand zusätzlich als Klasse.

@@ -1,0 +1,238 @@
+/* Stil der Variante 2 („C2 — Salon"). Gleiche Palette, gleiche Wärme und
+   dieselben Texte wie Richtung C, aber typografisch geführt statt fotogeführt:
+   Fraunces statt Lora, Fakten als Kartenraster statt Chips, Laufband als
+   Trenner, Termine mit Datumsblatt, dunkler Abschlussblock als Fußzeile.
+   Variante 1 bleibt unverändert unter ../stil.css. */
+:root{
+  --cream:#FCF8F1;
+  --sand:#EADDC9;
+  --clay:#D9C4AE;
+  --ink:#241D17;
+  --muted:#6F6357;
+  --rose:#A87A70;
+  --deep:#3A2E26;
+  /* Status der Termine, identisch zu Variante 1. */
+  --gruen:#3F7A46;
+  --bernstein:#8A5E10;
+  --rot:#B23B2E;
+  --max:1120px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:'Work Sans',system-ui,sans-serif;font-size:17.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--rose);text-decoration:none;border-bottom:1px solid rgba(168,122,112,0.4)}
+a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+img{display:block;max-width:100%}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:20px;padding-right:20px}
+.serif{font-family:'Fraunces',Georgia,serif;font-weight:520;line-height:1.07;letter-spacing:-0.01em}
+/* Das kursive Wort in der Überschrift ist die Handschrift dieser Variante. */
+.serif em{font-style:italic;font-weight:470;color:var(--rose)}
+.h1{font-size:clamp(37px,6.6vw,82px)}
+.h2{font-size:clamp(27px,3.6vw,44px)}
+.h3{font-size:clamp(20px,2vw,26px)}
+.lede{font-size:clamp(17px,1.5vw,21px);line-height:1.65}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--rose);font-weight:600}
+.eyebrow::before{content:"";width:22px;height:1px;background:currentColor;flex:none}
+.sec{padding-top:92px;padding-bottom:92px}
+.btn{display:inline-block;background:var(--deep);color:var(--cream);padding:16px 30px;font-weight:500;font-size:16px;border-radius:999px;border:0;white-space:nowrap;text-align:center;cursor:pointer;font-family:inherit}
+.btn:hover{background:var(--rose);color:#fff;border:0}
+.btn.hell{background:var(--cream);color:var(--ink)}
+.btn.hell:hover{background:var(--rose);color:#fff}
+
+/* Kopfzeile: klebt oben und lässt die Seite durchscheinen. Mobil ist sie
+   normal mitscrollend, dort gehört der feste Rand der Sticky-Leiste unten. */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(252,248,241,0.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(217,196,174,0.45)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 0}
+.navlinks{display:flex;gap:26px;font-size:15.5px}
+.navlinks a{border:0;color:var(--muted)}
+.navlinks a:hover{color:var(--ink)}
+.navlinks a.is-here{color:var(--ink);font-weight:500}
+.mark{font-family:'Fraunces',serif;font-weight:600;letter-spacing:0.18em;font-size:15px;color:var(--ink);white-space:nowrap}
+
+/* Typografischer Seitenkopf der Startseite. */
+.kopf{padding-top:clamp(44px,7vw,92px)}
+.kopf .h1{max-width:15ch;margin:18px 0 0}
+.kopf .lede{color:var(--muted);max-width:52ch;margin:24px 0 0}
+.fakten{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:40px}
+.fakt{background:#fff;border:1px solid rgba(217,196,174,0.55);border-radius:20px;padding:18px 20px}
+.fakt .wert{font-family:'Fraunces',serif;font-weight:560;font-size:clamp(19px,1.9vw,24px);line-height:1.2}
+.fakt .name{font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:7px}
+
+/* Bühne: das große Bild unter dem Schriftkopf. Mobil läuft dort der Clip,
+   am Desktop wäre das 464px breite Material sichtbar weich, dort bleibt
+   das Foto (gleiche Regel wie in Variante 1). */
+.buehne{position:relative;border-radius:28px;overflow:hidden;height:clamp(380px,46vw,560px);background:var(--sand) center/cover no-repeat}
+.buehne img{width:100%;height:100%;object-fit:cover;object-position:50% 72%}
+.buehne video{display:none;width:100%;height:100%;object-fit:cover;object-position:50% 75%}
+.sticker{position:absolute;right:22px;top:22px;width:116px;height:116px;border-radius:50%;background:var(--rose);color:#fff;display:grid;place-items:center;text-align:center;font-family:'Fraunces',serif;font-size:15px;line-height:1.3;padding:14px;transform:rotate(7deg)}
+
+/* Laufband: die Kernfakten als ruhig durchlaufende Zeile. Beide Sätze sind
+   identisch, die Spur wandert um die Hälfte, dadurch ist die Schleife nahtlos. */
+.laufband{overflow:hidden;border-top:1px solid var(--clay);border-bottom:1px solid var(--clay);padding:13px 0;margin-top:72px}
+.laufband .spur{display:flex;width:max-content;animation:laufen 34s linear infinite}
+.laufband .satz{white-space:nowrap;font-family:'Fraunces',serif;font-size:17.5px;color:var(--deep)}
+@keyframes laufen{to{transform:translateX(-50%)}}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.soft{background:var(--sand);border-radius:30px;padding:clamp(28px,4vw,64px)}
+.schmal{max-width:58ch}
+.rounded{border-radius:24px;object-fit:cover;width:100%}
+/* Eine abweichende Ecke gibt den Bildern dieser Variante ihre Form. */
+.rounded.eck{border-radius:26px 26px 26px 96px}
+.list{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.list li{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:start}
+.tick{width:11px;height:11px;border-radius:50%;background:var(--rose);margin-top:9px}
+.quali{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.quali span{background:var(--sand);padding:8px 16px;font-size:14px;border-radius:999px;color:var(--ink)}
+
+/* Stimmen: weiße Karten mit großem Anführungszeichen, mobil wischbar. */
+.zitate{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.zitat{background:#fff;border:1px solid rgba(217,196,174,0.5);border-radius:24px;padding:26px 28px}
+.zitat::before{content:"„";font-family:'Fraunces',Georgia,serif;font-size:52px;line-height:1;color:var(--rose);display:block;margin:-14px 0 6px}
+.qname{margin-top:16px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--rose);font-weight:600}
+
+/* Abschlussblock: dunkle Karte am Seitenende, trägt auch die Fußzeile. */
+.schluss{background:var(--deep);color:var(--cream);border-radius:32px;margin:24px 12px 0}
+/* Die Luft unter dem Abschlussblock muss im Inhalt liegen, nicht als Marge:
+   das dc-Runtime rendert in einen eigenen Container, dessen Inhalt überläuft,
+   und Margen zählen dort nicht zum Scrollbereich. Mobil schafft derselbe
+   Spacer den Platz für die Sticky-Leiste. */
+[data-screen-label]::after{content:"";display:block;height:12px}
+.schluss-innen{max-width:var(--max);margin:0 auto;padding:clamp(48px,7vw,92px) clamp(20px,4vw,48px) 28px}
+.schluss.knapp .schluss-innen{padding-top:40px}
+.schluss .eyebrow{color:var(--clay)}
+.schluss .serif em{color:var(--clay)}
+.schluss .gross{font-size:clamp(32px,4.8vw,62px);max-width:18ch;margin:18px 0 0}
+.schluss .hinweis{color:rgba(252,248,241,0.65)}
+.foot{display:flex;justify-content:space-between;gap:24px 40px;flex-wrap:wrap;font-size:15px;color:rgba(252,248,241,0.72);border-top:1px solid rgba(252,248,241,0.16);margin-top:56px;padding-top:28px}
+.schluss.knapp .foot{margin-top:8px}
+.footlinks{display:flex;gap:24px;flex-wrap:wrap}
+.foot a{border:0;color:rgba(252,248,241,0.72)}
+.foot a:hover{color:#fff}
+.foot .mark{color:var(--cream)}
+.stickybar{display:none}
+
+/* Bewegtbild: identische Regeln wie Variante 1, die Clips liegen eine Ebene
+   höher unter ../video/. Stumm, in Schleife, ohne Bedienelemente; das
+   Standbild liegt als background-image am Rahmen. */
+.klipp{position:relative;overflow:hidden;border-radius:24px;background:var(--sand) center/cover no-repeat;margin:0}
+.klipp video{display:block;width:100%;height:100%;object-fit:cover}
+.klipp.wiebild{height:440px}
+.klipp.wiebild video{object-position:50% 75%}
+.klipp.aufrecht{height:auto;aspect-ratio:4/5}
+.klipp.aufrecht video{object-position:50% 45%}
+
+/* Unterseitenkopf: Maß liegt am Text, nicht am Container (Regel aus V1). */
+.pagehead{padding-top:44px;padding-bottom:8px}
+.pagehead .h1{max-width:16ch}
+
+/* Anmeldeseite: Terminkarten mit Datumsblatt. */
+.termine{display:grid;gap:12px}
+.termin{background:#fff;border:1px solid rgba(217,196,174,0.7);border-radius:22px;padding:16px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.termin.is-off{background:#FBF0EE;border-color:rgba(178,59,46,0.22)}
+.termin.is-off .blatt{background:rgba(178,59,46,0.10);color:var(--rot)}
+.termin.is-off .wann{opacity:0.65}
+.termin.is-online{background:#FAF5EA;border-color:rgba(138,94,16,0.22)}
+.termin.is-online .blatt{background:rgba(138,94,16,0.10)}
+.blatt{flex:none;width:66px;height:72px;border-radius:16px;background:var(--sand);display:grid;place-content:center;text-align:center;line-height:1.1}
+.blatt .tag{font-family:'Fraunces',serif;font-size:26px;font-weight:560}
+.blatt .monat{font-size:11.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.termin .mitte{flex:1;min-width:220px}
+.termin .wann{font-family:'Fraunces',serif;font-size:19px;font-weight:540}
+.termin .wo{color:var(--muted);font-size:15px;margin-top:2px}
+.optionen{display:flex;gap:8px;flex-wrap:wrap}
+.opt{border:1px solid var(--clay);background:transparent;border-radius:999px;padding:9px 18px;font-size:15px;font-family:inherit;color:var(--ink);cursor:pointer}
+.opt:hover{border-color:var(--rose)}
+.opt.is-on{background:var(--rose);border-color:var(--rose);color:#fff}
+.opt[disabled]{cursor:default}
+.opt.is-voll{color:var(--bernstein);border-color:rgba(138,94,16,0.45)}
+.opt.is-voll:hover{border-color:var(--bernstein)}
+.opt.is-aus{color:var(--rot);border-color:rgba(178,59,46,0.3);text-decoration:line-through}
+.opt.is-aus:hover{border-color:rgba(178,59,46,0.3)}
+.feld{display:grid;gap:7px;margin-bottom:18px}
+.feld label{font-size:15px;color:var(--muted)}
+.feld input{font:inherit;font-size:17px;padding:14px 16px;border:1px solid var(--clay);border-radius:16px;background:#fff;color:var(--ink);width:100%}
+.feld input:focus{outline:2px solid var(--rose);outline-offset:1px;border-color:var(--rose)}
+.hinweis{font-size:15px;color:var(--muted)}
+.status{display:inline-block;border-radius:999px;padding:6px 15px;font-size:14px;font-weight:500;border:1px solid;white-space:nowrap}
+.status.frei{color:var(--gruen);background:rgba(63,122,70,0.10);border-color:rgba(63,122,70,0.3)}
+.status.voll{color:var(--bernstein);background:rgba(138,94,16,0.10);border-color:rgba(138,94,16,0.3)}
+.status.aus{color:var(--rot);background:rgba(178,59,46,0.09);border-color:rgba(178,59,46,0.28)}
+.mehr{margin-top:14px}
+.mehr summary{display:block;cursor:pointer;color:var(--rose);font-size:16px;padding:14px 0}
+.mehr summary::-webkit-details-marker{display:none}
+.mehr summary::before{content:"+ ";font-weight:600}
+.mehr[open] summary::before{content:"– "}
+.mehr summary:hover{color:var(--ink)}
+.mehr[open] .termine{margin-top:4px}
+
+/* Angebotsseite: nummerierte Blöcke und Preise als Karte. */
+.nr{font-family:'Fraunces',serif;font-size:clamp(40px,5vw,64px);font-weight:560;color:var(--clay);line-height:1}
+.preiskarte{background:#fff;border:1px solid rgba(217,196,174,0.55);border-radius:22px;padding:22px 26px}
+.soft .preiskarte{background:rgba(252,248,241,0.75);border-color:rgba(111,99,87,0.18)}
+.preis{font-family:'Fraunces',serif;font-size:clamp(23px,2.5vw,30px);font-weight:560;line-height:1.25}
+.preis .neben{display:block;font-family:'Work Sans',system-ui,sans-serif;font-size:15px;font-weight:400;color:var(--muted);margin-top:6px}
+
+/* Über mich: Ausbildung als Zeitstrahl. */
+.zeitstrahl{list-style:none;margin:0;padding:0 0 0 2px}
+.station{position:relative;border-left:2px solid var(--clay);padding:0 0 26px 26px}
+.station:last-child{padding-bottom:4px}
+.station::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--rose)}
+.station .jahr{font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--rose);font-weight:600}
+.station .was{font-family:'Fraunces',serif;font-size:19px;font-weight:540;margin-top:4px}
+.station .wobei{color:var(--muted);font-size:15px;margin-top:2px}
+
+/* Kontaktseite: die zwei Wege als große Karten. */
+.wege{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.weg{background:#fff;border:1px solid rgba(217,196,174,0.55);border-radius:24px;padding:28px}
+.weg .h3{margin:10px 0 6px}
+
+@media (max-width:880px){
+  .two,.zitate,.wege{grid-template-columns:1fr;gap:32px}
+  .pagehead{padding-top:24px}
+  .pagehead .h1{max-width:none}
+  .sec{padding-top:56px;padding-bottom:56px}
+  /* Kopfzeile bricht um wie in Variante 1: Wortmarke oben, Links als eigene,
+     bei Platznot waagerecht scrollende Zeile. Kein Burger, kein JavaScript. */
+  .topbar{position:static}
+  .nav{flex-wrap:wrap;row-gap:10px}
+  .navlinks{order:3;width:100%;gap:20px;font-size:15px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .navlinks::-webkit-scrollbar{display:none}
+  .navlinks a{white-space:nowrap}
+}
+@media (max-width:700px){
+  /* Ohne diesen Platz verdeckt die Sticky-Leiste die letzten Zeilen. */
+  [data-screen-label]::after{height:120px}
+  body.ohne-sticky [data-screen-label]::after{height:8px}
+  .nav .btn{display:none}
+  .nav{justify-content:flex-start;padding:14px 0}
+  .kopf{padding-top:28px}
+  .fakten{grid-template-columns:1fr 1fr;gap:10px;margin-top:30px}
+  .laufband{margin-top:48px}
+  .rounded{height:300px !important}
+  .klipp.wiebild{height:300px}
+  .klipp.aufrecht{height:auto}
+  /* Mobil trägt die Bühne den Clip: hochkant gefilmt, hochkant gezeigt. */
+  .buehne{height:520px}
+  .buehne video{display:block}
+  .buehne img{display:none}
+  .sticker{width:96px;height:96px;font-size:13px;right:14px;top:14px}
+  /* Stimmen: eine wischbare Reihe, die Seite selbst läuft nicht über. */
+  .zitate{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -20px;padding:2px 20px 8px;scrollbar-width:none}
+  .zitate::-webkit-scrollbar{display:none}
+  .zitat{flex:0 0 82%;scroll-snap-align:center}
+  .schluss{margin:16px 8px 0;border-radius:26px}
+  .foot{gap:16px 20px;margin-top:40px}
+  .footlinks{gap:14px 20px}
+  .stickybar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--cream);border-top:1px solid var(--clay);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+  .stickybar .btn{display:block;width:100%;padding:16px 20px}
+  /* Buttons und Blöcke, die mobil dasselbe sagen wie die Sticky-Leiste. */
+  .nur-desktop{display:none}
+  body.ohne-sticky{padding-bottom:0}
+}
+/* Wer Bewegung abgestellt hat, bekommt Standbilder und ein stehendes Laufband. */
+@media (prefers-reduced-motion:reduce){
+  .klipp video{display:none}
+  .buehne video{display:none}
+  .buehne img{display:block}
+  .laufband .spur{animation:none}
+}
