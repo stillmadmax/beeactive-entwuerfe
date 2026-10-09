@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+    <title>Admin · Bee Active</title>
+    <script src="./support.js"></script>
+    <script src="./buchung.js"></script>
+  </head>
+  <body class="ohne-sticky">
+    <x-dc>
+      <helmet data-dc-atomics>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="./stil.css" />
+      </helmet>
+
+      <div data-screen-label="Admin">
+        <div class="wrap">
+          <div class="nav">
+            <div class="mark"><a href="./" style="border:0;color:inherit">BEE ACTIVE</a></div>
+            <div class="navlinks">
+              <a href="./anmelden.dc.html">Anmelden</a>
+              <a href="./angebot.dc.html">Angebot</a>
+              <a href="./ueber-mich.dc.html">Über mich</a>
+              <a href="./kontakt.dc.html">Kontakt</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap pagehead">
+          <div class="eyebrow">Admin</div>
+          <h1 class="serif h1" style="margin:14px 0 0;font-size:clamp(30px,4.4vw,54px)">Deine Mittwoche</h1>
+          <p class="lede" style="margin:18px 0 0;color:var(--muted);max-width:46ch">
+            Wer kommt, wer hat bezahlt, und ein Klick, wenn ein Mittwoch ausfallen muss.
+          </p>
+        </div>
+
+        <div class="wrap" style="padding-top:28px">
+          <p class="proto">Prototyp ohne Passwort. Alles hier bleibt in diesem Browser und wirkt sofort auf die <a href="./anmelden.dc.html">Anmeldeseite</a>. Mails gehen keine raus, was verschickt würde, steht unten im Postausgang.</p>
+        </div>
+
+        <div class="wrap" style="padding-top:8px;padding-bottom:56px">
+          <div class="termine">
+            <sc-for list="{{ termine }}" as="t">
+              <div class="{{ t.cls }}">
+                <div>
+                  <div class="wann">{{ t.lang }}</div>
+                  <div class="wo">{{ t.zeile }}</div>
+                </div>
+                <div class="{{ t.statusCls }}">{{ t.status }}</div>
+                <!-- Im Kopf nur, was Bine wöchentlich braucht: die Liste und
+                     die Absage. Alles Seltene steckt in der aufgeklappten
+                     Karte, sonst ist die Übersicht auf dem Handy zehn
+                     Bildschirme lang. -->
+                <div class="aktionen">
+                  <button class="{{ t.listeCls }}" type="button" onclick="{{ t.aufklappen }}">{{ t.listeText }}</button>
+                  <sc-if value="{{ !t.vorbei }}">
+                    <button class="opt" type="button" onclick="{{ t.absagen }}">{{ t.absagenText }}</button>
+                  </sc-if>
+                </div>
+                <sc-if value="{{ t.offen }}">
+                  <div class="teilnehmer">
+                    <sc-for list="{{ t.liste }}" as="a">
+                      <div class="zeile">
+                        <div class="wer"><strong>{{ a.name }}</strong><br /><span class="hinweis">{{ a.mail }}</span></div>
+                        <div class="hinweis">{{ a.ortText }} · {{ a.zahlText }}</div>
+                        <sc-if value="{{ a.zahlbar }}">
+                          <label class="haken"><input type="checkbox" checked="{{ a.bezahlt }}" onchange="{{ a.bezahltUmschalten }}" /> bezahlt</label>
+                        </sc-if>
+                        <sc-if value="{{ !a.zahlbar }}">
+                          <span class="hinweis">nichts zu zahlen</span>
+                        </sc-if>
+                        <button class="opt" type="button" onclick="{{ a.austragen }}">Austragen</button>
+                      </div>
+                    </sc-for>
+                    <sc-if value="{{ t.leer }}">
+                      <p class="hinweis" style="margin:0">Noch niemand angemeldet.</p>
+                    </sc-if>
+
+                    <sc-if value="{{ !t.vorbei }}">
+                      <div class="einstellungen">
+                        <div class="eyebrow">Nur dieser Mittwoch</div>
+                        <div class="optionen">
+                          <button class="opt" type="button" disabled="{{ t.abgesagt }}" onclick="{{ t.vollSchalten }}">{{ t.vollText }}</button>
+                          <button class="{{ t.beidesCls }}" type="button" disabled="{{ t.abgesagt }}" onclick="{{ t.beides }}">Vor Ort und Zoom</button>
+                          <button class="{{ t.nurOnlineCls }}" type="button" disabled="{{ t.abgesagt }}" onclick="{{ t.nurOnlineSetzen }}">Nur Zoom</button>
+                          <button class="{{ t.nurVorOrtCls }}" type="button" disabled="{{ t.abgesagt }}" onclick="{{ t.nurVorOrtSetzen }}">Nur vor Ort</button>
+                        </div>
+                        <div class="optionen">
+                          <span class="stepper">Plätze
+                            <button type="button" aria-label="Ein Platz weniger" onclick="{{ t.weniger }}">−</button><b>{{ t.plaetze }}</b><button type="button" aria-label="Ein Platz mehr" onclick="{{ t.mehr }}">+</button>
+                          </span>
+                          <label class="zeitfeld">Beginn <input type="time" value="{{ t.uhrzeit }}" onchange="{{ t.uhrzeitAendern }}" /></label>
+                        </div>
+                      </div>
+                    </sc-if>
+
+                    <div class="eintragen">
+                      <div class="eyebrow">Jemanden eintragen</div>
+                      <div class="feld">
+                        <label for="neu-name">Name</label>
+                        <input id="neu-name" type="text" value="{{ neu.name }}" oninput="{{ neuName }}" />
+                      </div>
+                      <div class="feld">
+                        <label for="neu-mail">E-Mail</label>
+                        <input id="neu-mail" type="email" value="{{ neu.mail }}" oninput="{{ neuMail }}" />
+                      </div>
+                      <div class="optionen">
+                        <button class="{{ neu.vorOrtCls }}" type="button" onclick="{{ neuVorOrt }}">Vor Ort</button>
+                        <button class="{{ neu.onlineCls }}" type="button" onclick="{{ neuOnline }}">Online</button>
+                      </div>
+                      <div class="optionen">
+                        <button class="{{ neu.paypalCls }}" type="button" onclick="{{ neuPaypal }}">PayPal</button>
+                        <button class="{{ neu.barCls }}" type="button" disabled="{{ neu.online }}" onclick="{{ neuBar }}">Bar</button>
+                        <button class="{{ neu.wellpassCls }}" type="button" disabled="{{ neu.online }}" onclick="{{ neuWellpass }}">Wellpass</button>
+                      </div>
+                      <sc-if value="{{ neu.fehler }}">
+                        <p class="fehler" style="margin:0">{{ neu.fehler }}</p>
+                      </sc-if>
+                      <div><button class="btn" type="button" onclick="{{ t.eintragen }}">Eintragen</button></div>
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div class="wrap" style="padding-bottom:56px">
+          <div class="soft">
+            <div class="two" style="align-items:start">
+              <div>
+                <div class="eyebrow">Die Serie</div>
+                <h2 class="serif h2" style="margin:14px 0 16px">Jeden Mittwoch, {{ serie.uhrzeit }} Uhr</h2>
+                <p style="margin:0;max-width:44ch;color:var(--muted)">Daraus entstehen die Termine von selbst, acht Wochen im Voraus. Was du hier änderst, gilt für alle Mittwoche ohne eigene Einstellung. Anmeldeschluss ist eine Stunde vor Beginn, also {{ serie.schluss }} Uhr.</p>
+              </div>
+              <div>
+                <div class="feld">
+                  <label>Plätze vor Ort</label>
+                  <span class="stepper"><button type="button" aria-label="Ein Platz weniger" onclick="{{ serieWeniger }}">−</button><b>{{ serie.plaetze }}</b><button type="button" aria-label="Ein Platz mehr" onclick="{{ serieMehr }}">+</button></span>
+                </div>
+                <div class="feld">
+                  <label for="s-uhrzeit">Beginn</label>
+                  <label class="zeitfeld"><input id="s-uhrzeit" type="time" value="{{ serie.uhrzeit }}" onchange="{{ serieUhrzeit }}" /> {{ serie.dauer }} Minuten</label>
+                </div>
+                <div class="feld">
+                  <label for="s-zoom">Zoom-Link, steht in jeder Online-Bestätigung. Ein neuer Link geht an alle, die schon online angemeldet sind</label>
+                  <input id="s-zoom" type="url" value="{{ zoom }}" oninput="{{ zoomTippen }}" />
+                  <div><button class="btn zweit" type="button" style="padding:12px 24px;font-size:15px" disabled="{{ zoomGleich }}" onclick="{{ zoomSpeichern }}">Link speichern</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap" style="padding-bottom:56px">
+          <div class="soft">
+            <div class="two" style="align-items:start">
+              <div>
+                <div class="eyebrow">Urlaub</div>
+                <h2 class="serif h2" style="margin:14px 0 16px">Mehrere Mittwoche auf einmal absagen</h2>
+                <p style="margin:0;max-width:44ch;color:var(--muted)">Alle kommenden Mittwoche im Zeitraum fallen aus, wer schon angemeldet ist, bekäme eine Absage. Einzeln zurücknehmen geht oben am Termin.</p>
+              </div>
+              <div>
+                <div class="feld">
+                  <label for="u-von">Von</label>
+                  <input id="u-von" type="date" value="{{ urlaub.von }}" oninput="{{ urlaubVon }}" />
+                </div>
+                <div class="feld">
+                  <label for="u-bis">Bis</label>
+                  <input id="u-bis" type="date" value="{{ urlaub.bis }}" oninput="{{ urlaubBis }}" />
+                </div>
+                <div><button class="btn" type="button" disabled="{{ urlaubZu }}" onclick="{{ urlaubAbsagen }}">Mittwoche absagen</button></div>
+                <sc-if value="{{ urlaub.meldung }}">
+                  <p class="hinweis" style="margin:12px 0 0">{{ urlaub.meldung }}</p>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap" style="padding-bottom:56px">
+          <div class="two" style="align-items:start">
+            <div>
+              <div class="eyebrow">Postausgang</div>
+              <h2 class="serif h2" style="margin:14px 0 16px">Was verschickt würde</h2>
+              <p style="margin:0;max-width:44ch;color:var(--muted)">Im Prototyp geht keine Mail raus. Hier steht, was die Seite verschickt hätte: Bestätigungen, Abmeldungen, Absagen und Änderungen an alle auf der Liste, ein neuer Zoom-Link.</p>
+            </div>
+            <div>
+              <sc-if value="{{ post.length }}">
+                <div class="post">
+                  <sc-for list="{{ post }}" as="p">
+                    <div class="zeile"><span class="zeit">{{ p.zeit }}</span><span>An {{ p.an }}: {{ p.betreff }}</span></div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ !post.length }}">
+                <p class="hinweis" style="margin:0">Noch nichts. Melde dich auf der Anmeldeseite an, dann steht die Bestätigung hier.</p>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap" style="padding-bottom:88px">
+          <p class="hinweis" style="margin:0">Alles auf Anfang? <a href="#" onclick="{{ zuruecksetzen }}">Prototyp zurücksetzen</a>, das löscht alle Anmeldungen und Einstellungen in diesem Browser.</p>
+        </div>
+
+        <div class="wrap">
+          <div class="foot">
+            <div class="mark">BEE ACTIVE</div>
+            <div class="footlinks">
+              <a href="./">Start</a>
+              <a href="./anmelden.dc.html">Anmelden</a>
+              <a href="./angebot.dc.html">Angebot</a>
+              <a href="./ueber-mich.dc.html">Über mich</a>
+              <a href="./kontakt.dc.html">Kontakt</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </x-dc>
+    <script
+      type="text/x-dc"
+      data-dc-script
+      data-props='{}'
+    >
+      // Der Admin ändert den Speicher über buchung.js und zeichnet danach
+      // neu. Eigener Zustand ist nur, was gerade aufgeklappt oder getippt,
+      // aber noch nicht gespeichert ist.
+      class Component extends DCLogic {
+        constructor(p) {
+          super(p);
+          this.state = {
+            offen: null,
+            neu: this.leeresNeu(),
+            zoom: window.Buchung.serie().zoom,
+            urlaub: { von: '', bis: '', meldung: '' },
+          };
+          this.aufSpeicher = () => this.forceUpdate();
+        }
+
+        // Meldet sich jemand im anderen Tab an, zeichnet die Seite neu
+        componentDidMount() { window.addEventListener('storage', this.aufSpeicher); }
+        componentWillUnmount() { window.removeEventListener('storage', this.aufSpeicher); }
+
+        leeresNeu() { return { name: '', mail: '', ort: 'vorort', zahlweg: 'paypal', fehler: null }; }
+
+        // Nach jeder Änderung am Speicher reicht ein Neuzeichnen
+        neu() { this.forceUpdate(); }
+
+        neuSetzen(patch) {
+          this.setState((s) => ({ neu: Object.assign({}, s.neu, { fehler: null }, patch) }));
+        }
+
+        eintragen(key) {
+          const B = window.Buchung;
+          const n = this.state.neu;
+          const w = B.wirksam(null, n.ort, n.zahlweg);
+          const r = B.anmelden({ termin: key, name: n.name, mail: n.mail, ort: w.ort, zahlweg: w.zahlweg }, true);
+          if (!r.ok) { this.neuSetzen({ fehler: r.fehler }); return; }
+          this.setState({ neu: this.leeresNeu() });
+        }
+
+        uhrzeit(key, wert) {
+          // Leer heißt: das Feld wird gerade bearbeitet, nichts speichern
+          if (!/^\d\d:\d\d$/.test(wert)) return;
+          if (key) window.Buchung.ausnahme(key, { uhrzeit: wert });
+          else window.Buchung.serieAendern({ uhrzeit: wert });
+          this.neu();
+        }
+
+        plaetze(key, delta) {
+          const t = window.Buchung.termin(key);
+          window.Buchung.ausnahme(key, { plaetze: Math.max(1, Math.min(50, t.plaetze + delta)) });
+          this.neu();
+        }
+
+        renderVals() {
+          const B = window.Buchung;
+          const jetzt = B.jetzt();
+          const s = this.state;
+          const heuteKey = B.tagKey(jetzt);
+          const an = (x, zu) => 'opt' + (x ? ' is-on' : zu ? ' is-gesperrt' : '');
+
+          const termine = B.adminTermine(jetzt).map((t) => {
+            const liste = B.aktive(t.key).map((a) => ({
+              name: a.name,
+              mail: a.mail,
+              ortText: B.ORT_TEXT[a.ort],
+              zahlText: B.ZAHLWEG_TEXT[a.zahlweg],
+              zahlbar: a.zahlweg !== 'wellpass',
+              bezahlt: a.bezahlt,
+              bezahltUmschalten: (e) => { B.bezahlt(a.id, e.target.checked); this.neu(); },
+              austragen: () => {
+                if (!window.confirm(a.name + ' von der Liste für ' + t.lang + ' nehmen?')) return;
+                B.abmelden(a.id, true);
+                this.neu();
+              },
+            }));
+            const n = t.vorOrt + t.online;
+            const zeile = t.uhrzeit + '–' + t.ende + ' · '
+              + (n === 0 ? 'noch niemand' : t.vorOrt + ' vor Ort, ' + t.online + ' online')
+              + ' · ' + t.plaetze + ' Plätze';
+            let status = t.status, statusCls = t.statusCls;
+            if (t.vorbei) { status = 'Vorbei'; statusCls = 'aus'; }
+            else if (t.abgesagt) { /* bleibt „Abgesagt“ */ }
+            else if (t.begonnen) { status = 'Läuft gerade'; statusCls = 'voll'; }
+            else if (t.geschlossen) { status = 'Anmeldung zu'; statusCls = 'voll'; }
+            const offen = s.offen === t.key;
+            return {
+              key: t.key,
+              lang: (t.key === heuteKey ? 'Heute, ' : '') + t.lang,
+              zeile,
+              status,
+              statusCls: 'status ' + statusCls,
+              cls: 'termin ' + t.cls + (t.vorbei ? ' is-vorbei' : ''),
+              abgesagt: t.abgesagt,
+              vorbei: t.vorbei,
+              plaetze: t.plaetze,
+              uhrzeit: t.uhrzeit,
+              offen,
+              leer: liste.length === 0,
+              liste,
+              listeCls: an(offen, false),
+              listeText: 'Teilnehmer (' + n + ')',
+              // Beim Wechsel auf eine andere Karte das Eintragen-Formular
+              // leeren, sonst landet ein getippter Name am falschen Mittwoch
+              aufklappen: () => this.setState({ offen: offen ? null : t.key, neu: this.leeresNeu() }),
+              absagenText: t.abgesagt ? 'Absage zurücknehmen' : 'Absagen',
+              // Beides verschickt Mails an alle auf der Liste, deshalb erst
+              // die Rückfrage mit der Zahl
+              absagen: () => {
+                const frage = t.abgesagt
+                  ? n + ' Angemeldete bekommen „Findet doch statt“ für ' + t.lang + '. Absage zurücknehmen?'
+                  : n + ' Angemeldete bekommen eine Absage für ' + t.lang + '. Absagen?';
+                if (n > 0 && !window.confirm(frage)) return;
+                if (t.abgesagt) B.absageZurueck(t.key);
+                else B.absagen(t.key, '');
+                this.neu();
+              },
+              vollText: t.manuellVoll ? 'Vor Ort wieder öffnen' : 'Vor Ort ausbuchen',
+              vollSchalten: () => { B.ausnahme(t.key, { voll: !t.manuellVoll }); this.neu(); },
+              beidesCls: an(!t.nurOnline && !t.nurVorOrt, false),
+              nurOnlineCls: an(t.nurOnline, false),
+              nurVorOrtCls: an(t.nurVorOrt, false),
+              beides: () => { B.ausnahme(t.key, { nurOnline: false, nurVorOrt: false }); this.neu(); },
+              nurOnlineSetzen: () => { B.ausnahme(t.key, { nurOnline: true, nurVorOrt: false }); this.neu(); },
+              nurVorOrtSetzen: () => { B.ausnahme(t.key, { nurOnline: false, nurVorOrt: true }); this.neu(); },
+              weniger: () => this.plaetze(t.key, -1),
+              mehr: () => this.plaetze(t.key, 1),
+              uhrzeitAendern: (e) => this.uhrzeit(t.key, e.target.value),
+              eintragen: () => this.eintragen(t.key),
+            };
+          });
+
+          const n = s.neu;
+          const w = B.wirksam(null, n.ort, n.zahlweg);
+          const online = w.ort === 'online';
+          const serie = B.serie();
+
+          const post = B.postausgang().map((p) => ({
+            zeit: new Date(p.zeit).toLocaleString('de-DE', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }),
+            an: p.an,
+            betreff: p.betreff,
+          }));
+
+          return {
+            termine,
+            neu: {
+              name: n.name, mail: n.mail, fehler: n.fehler, online,
+              vorOrtCls: an(!online, false), onlineCls: an(online, false),
+              paypalCls: an(w.zahlweg === 'paypal', false), barCls: an(w.zahlweg === 'bar', online), wellpassCls: an(w.zahlweg === 'wellpass', online),
+            },
+            neuName: (e) => this.neuSetzen({ name: e.target.value }),
+            neuMail: (e) => this.neuSetzen({ mail: e.target.value }),
+            neuVorOrt: () => this.neuSetzen({ ort: 'vorort' }),
+            neuOnline: () => this.neuSetzen({ ort: 'online' }),
+            neuPaypal: () => this.neuSetzen({ zahlweg: 'paypal' }),
+            neuBar: () => this.neuSetzen({ zahlweg: 'bar' }),
+            neuWellpass: () => this.neuSetzen({ zahlweg: 'wellpass' }),
+            serie,
+            serieWeniger: () => { B.serieAendern({ plaetze: Math.max(1, serie.plaetze - 1) }); this.neu(); },
+            serieMehr: () => { B.serieAendern({ plaetze: Math.min(50, serie.plaetze + 1) }); this.neu(); },
+            serieUhrzeit: (e) => this.uhrzeit(null, e.target.value),
+            zoom: s.zoom,
+            zoomGleich: s.zoom.trim() === serie.zoom || !B.linkGueltig(s.zoom.trim()),
+            zoomTippen: (e) => this.setState({ zoom: e.target.value }),
+            zoomSpeichern: () => { B.serieAendern({ zoom: s.zoom.trim() }); this.neu(); },
+            urlaub: s.urlaub,
+            urlaubZu: !s.urlaub.von || !s.urlaub.bis || s.urlaub.bis < s.urlaub.von,
+            urlaubVon: (e) => this.setState({ urlaub: Object.assign({}, s.urlaub, { von: e.target.value, meldung: '' }) }),
+            urlaubBis: (e) => this.setState({ urlaub: Object.assign({}, s.urlaub, { bis: e.target.value, meldung: '' }) }),
+            urlaubAbsagen: () => {
+              const k = B.urlaub(s.urlaub.von, s.urlaub.bis);
+              const meldung = k === 0 ? 'In dem Zeitraum gab es nichts mehr abzusagen.' : k === 1 ? 'Ein Mittwoch abgesagt.' : k + ' Mittwoche abgesagt.';
+              this.setState({ urlaub: { von: '', bis: '', meldung } });
+            },
+            post,
+            zuruecksetzen: (e) => {
+              e.preventDefault();
+              if (!window.confirm('Alle Anmeldungen und Einstellungen in diesem Browser löschen?')) return;
+              B.zuruecksetzen();
+              window.location.reload();
+            },
+          };
+        }
+      }
+    </script>
+  </body>
+</html>

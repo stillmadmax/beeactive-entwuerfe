@@ -6,6 +6,7 @@
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
     <title>Anmelden · Bee Active</title>
     <script src="./support.js"></script>
+    <script src="./buchung.js"></script>
     <script src="./bewegung.js" defer></script>
   </head>
   <body class="ohne-sticky">
@@ -32,13 +33,48 @@
         </div>
 
         <div class="wrap pagehead">
-          <div class="eyebrow">Dynamic Yoga, mittwochs 19:30</div>
+          <div class="eyebrow">Dynamic Yoga, mittwochs {{ serie.uhrzeit }}</div>
           <h1 class="serif h1" style="margin:14px 0 0;font-size:clamp(30px,4.4vw,54px)">Jeder Mittwoch ist deiner</h1>
           <p class="lede" style="margin:18px 0 0;color:var(--muted);max-width:46ch">
             Einstieg jederzeit, auch mitten im Jahr, und für so viele Mittwoche, wie du magst.
             Kein Konto, kein Abo. Name, Mail, fertig.
           </p>
         </div>
+
+        <!-- Abmelden über den Link aus der Bestätigungsmail (?abmelden=…).
+             Erst eine Rückfrage, dann der Klick: Mailprogramme rufen Links
+             gern vorab auf, ein reiner Aufruf darf deshalb nichts auslösen. -->
+        <sc-if value="{{ abmeldung }}">
+          <div class="wrap" style="padding-top:36px">
+            <div class="soft" style="max-width:640px">
+              <div class="eyebrow">Abmelden</div>
+              <sc-if value="{{ abmeldung.frage }}">
+                <h2 class="serif h2" style="margin:14px 0 16px">Du kannst am {{ abmeldung.lang }} doch nicht?</h2>
+                <p style="margin:0 0 24px;max-width:46ch">Angemeldet ist {{ abmeldung.name }}, {{ abmeldung.ortText }}. Ein Klick, dann bist du von der Liste.</p>
+                <div class="optionen">
+                  <button class="btn" type="button" onclick="{{ abmeldung.bestaetigen }}">Ja, abmelden</button>
+                  <a class="btn zweit" href="./anmelden.dc.html">Doch dabei bleiben</a>
+                </div>
+              </sc-if>
+              <sc-if value="{{ abmeldung.fertig }}">
+                <h2 class="serif h2" style="margin:14px 0 16px">Du bist abgemeldet</h2>
+                <p style="margin:0;max-width:46ch">Schade, aber danke fürs Bescheidsagen. Bis zum nächsten Mal! <a href="./anmelden.dc.html">Zu den Terminen</a></p>
+              </sc-if>
+              <sc-if value="{{ abmeldung.schon }}">
+                <h2 class="serif h2" style="margin:14px 0 16px">Du bist schon abgemeldet</h2>
+                <p style="margin:0;max-width:46ch">Für {{ abmeldung.lang }} stehst du nicht mehr auf der Liste. Wenn du doch kommen magst, <a href="./anmelden.dc.html#formular">melde dich einfach neu an</a>.</p>
+              </sc-if>
+              <sc-if value="{{ abmeldung.vorbei }}">
+                <h2 class="serif h2" style="margin:14px 0 16px">Die Stunde ist schon vorbei</h2>
+                <p style="margin:0;max-width:46ch">{{ abmeldung.lang }} liegt hinter uns, da gibt es nichts mehr abzumelden. Für den nächsten Mittwoch <a href="./anmelden.dc.html#formular">meldest du dich einfach neu an</a>.</p>
+              </sc-if>
+              <sc-if value="{{ abmeldung.unbekannt }}">
+                <h2 class="serif h2" style="margin:14px 0 16px">Diesen Abmeldelink kenne ich nicht</h2>
+                <p style="margin:0;max-width:46ch">Vielleicht ist der Link unvollständig kopiert. Schreib mir kurz an <a href="mailto:beeactive@mailbox.org">beeactive@mailbox.org</a>, dann trage ich dich aus.</p>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
 
         <div class="wrap" style="padding-top:36px;padding-bottom:56px">
           <div class="termine">
@@ -70,70 +106,107 @@
             </div>
           </details>
           <p class="hinweis" style="margin:20px 0 0">
-            Anmelden kannst du dich bis 18:30 Uhr am Kurstag, dann weiß ich rechtzeitig, wer dabei ist.
+            Anmelden kannst du dich bis eine Stunde vor Beginn, bei {{ serie.uhrzeit }} Uhr also bis {{ serie.schluss }} Uhr am Kurstag. Dann weiß ich rechtzeitig, wer dabei ist.
           </p>
         </div>
 
         <div class="wrap" style="padding-bottom:88px" id="formular">
+          <p class="proto">Prototyp: Die Anmeldung funktioniert, verschickt wird aber nichts. Was als Mail rausginge, siehst du nach dem Absenden. <a href="./admin.dc.html">Zum Admin-Prototyp</a></p>
           <div class="soft">
             <div class="two" style="align-items:start">
               <div>
-                <div class="eyebrow">Deine Anmeldung</div>
-                <h2 class="serif h2" style="margin:14px 0 6px">Melde dich an</h2>
-                <p class="hinweis" style="margin:0 0 26px">19 Euro oder Wellpass · 60 Minuten</p>
+                <sc-if value="{{ zeigeFormular }}">
+                  <div class="eyebrow">Deine Anmeldung</div>
+                  <h2 class="serif h2" style="margin:14px 0 6px">Melde dich an</h2>
+                  <p class="hinweis" style="margin:0 0 26px">19 Euro oder Wellpass · {{ serie.dauer }} Minuten</p>
 
-                <div class="feld">
-                  <label for="name">Name</label>
-                  <input id="name" type="text" placeholder="Wie soll ich dich nennen?" />
-                </div>
-                <div class="feld">
-                  <label for="mail">E-Mail</label>
-                  <input id="mail" type="email" placeholder="für die Bestätigung" />
-                </div>
-                <div class="feld">
-                  <label>Welcher Mittwoch?</label>
-                  <div class="optionen" style="margin-top:8px">
-                    <sc-for list="{{ pillen }}" as="t">
-                      <sc-if value="{{ t.offen }}">
-                        <button class="{{ t.pille }}" type="button">{{ t.kurz }}</button>
-                      </sc-if>
-                      <sc-if value="{{ t.zu }}">
-                        <button class="{{ t.pille }}" type="button" disabled>{{ t.kurz }}</button>
-                      </sc-if>
-                    </sc-for>
+                  <div class="feld">
+                    <label for="name">Name</label>
+                    <input id="name" type="text" placeholder="Wie soll ich dich nennen?" autocomplete="name" value="{{ form.name }}" oninput="{{ aufName }}" />
+                    <sc-if value="{{ fehlerName }}"><p class="fehler" role="alert">{{ fehlerName }}</p></sc-if>
                   </div>
-                </div>
-                <div class="feld">
-                  <label>Vor Ort oder online?</label>
-                  <div class="optionen" style="margin-top:8px">
-                    <button class="opt is-on" type="button">Vor Ort</button>
-                    <button class="opt" type="button">Online</button>
+                  <div class="feld">
+                    <label for="mail">E-Mail</label>
+                    <input id="mail" type="email" placeholder="für die Bestätigung" autocomplete="email" value="{{ form.mail }}" oninput="{{ aufMail }}" />
+                    <sc-if value="{{ fehlerMail }}"><p class="fehler" role="alert">{{ fehlerMail }}</p></sc-if>
                   </div>
-                  <p class="hinweis" style="margin:10px 0 0">Den Zoom-Link bekommst du mit der Bestätigungsmail.
-                    An ausgebuchten Mittwochen bleibt nur Online wählbar, über Zoom ist immer Platz.</p>
-                </div>
-                <div class="feld">
-                  <label>Wie zahlst du?</label>
-                  <div class="optionen" style="margin-top:8px">
-                    <button class="opt is-on" type="button">PayPal</button>
-                    <button class="opt" type="button">Bar vor Ort</button>
-                    <button class="opt" type="button">Wellpass, nur vor Ort</button>
+                  <!-- Honigtopf: für Menschen unsichtbar, Bots füllen ihn aus. -->
+                  <div class="honig" aria-hidden="true">
+                    <label for="website">Website</label>
+                    <input id="website" type="text" tabindex="-1" autocomplete="off" value="{{ form.honig }}" oninput="{{ aufHonig }}" />
                   </div>
-                </div>
-                <button class="btn" type="button" style="width:100%;margin-top:6px">Jetzt anmelden</button>
-                <p class="hinweis" style="margin:16px 0 0">
-                  Mit der Anmeldung stimmst du der <a href="#">Datenschutzerklärung</a> zu. Ich speichere nur Name und Mail, und nur bis der Termin vorbei ist.
-                </p>
+                  <div class="feld">
+                    <label>Welcher Mittwoch?</label>
+                    <div class="optionen" style="margin-top:8px">
+                      <sc-for list="{{ pillen }}" as="t">
+                        <button class="{{ t.cls }}" type="button" disabled="{{ t.zu }}" onclick="{{ t.waehlen }}">{{ t.kurz }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+                  <div class="feld">
+                    <label>Vor Ort oder online?</label>
+                    <div class="optionen" style="margin-top:8px">
+                      <button class="{{ vorOrtCls }}" type="button" disabled="{{ vorOrtZu }}" onclick="{{ waehleVorOrt }}">Vor Ort</button>
+                      <button class="{{ onlineCls }}" type="button" disabled="{{ onlineZu }}" onclick="{{ waehleOnline }}">Online</button>
+                    </div>
+                    <p class="hinweis" style="margin:10px 0 0">{{ ortHinweis }}</p>
+                  </div>
+                  <div class="feld">
+                    <label>Wie zahlst du?</label>
+                    <div class="optionen" style="margin-top:8px">
+                      <button class="{{ paypalCls }}" type="button" onclick="{{ waehlePaypal }}">PayPal</button>
+                      <button class="{{ barCls }}" type="button" disabled="{{ barZu }}" onclick="{{ waehleBar }}">Bar vor Ort</button>
+                      <button class="{{ wellpassCls }}" type="button" disabled="{{ wellpassZu }}" onclick="{{ waehleWellpass }}">Wellpass, nur vor Ort</button>
+                    </div>
+                    <sc-if value="{{ zahlHinweis }}">
+                      <p class="hinweis" style="margin:10px 0 0">{{ zahlHinweis }}</p>
+                    </sc-if>
+                  </div>
+                  <sc-if value="{{ fehlerAllgemein }}">
+                    <p class="fehler" role="alert">{{ fehlerAllgemein }}</p>
+                  </sc-if>
+                  <!-- Die Wahl noch einmal in Worten, damit niemand den falschen
+                       Mittwoch bucht. Steht über dem Knopf statt darin: .btn
+                       bricht nicht um, und mobil passt das Datum nicht hinein. -->
+                  <p class="wahl">{{ wahl }}</p>
+                  <button class="btn" type="button" style="width:100%;margin-top:6px" disabled="{{ absendenZu }}" onclick="{{ absenden }}">Jetzt anmelden</button>
+                  <p class="hinweis" style="margin:16px 0 0">
+                    Mit der Anmeldung stimmst du der <a href="#">Datenschutzerklärung</a> zu. Ich speichere nur Name und Mail, und nur bis der Termin vorbei ist.
+                  </p>
+                </sc-if>
+
+                <sc-if value="{{ bestaetigung }}">
+                  <div class="eyebrow">Angemeldet</div>
+                  <h2 class="serif h2" style="margin:14px 0 6px">{{ bestaetigung.titel }}</h2>
+                  <p style="margin:0 0 22px;max-width:46ch">{{ bestaetigung.satz }}</p>
+                  <div class="mailvorschau">
+                    <div class="eyebrow" style="margin-bottom:12px">Diese Mail ginge jetzt an {{ bestaetigung.mail }}</div>{{ bestaetigung.text }}</div>
+                  <p class="hinweis" style="margin:12px 0 0">Im Prototyp wird nichts verschickt. Den Abmeldelink aus der Mail kannst du trotzdem <a href="{{ bestaetigung.link }}">hier ausprobieren</a>.</p>
+                  <button class="btn zweit" type="button" style="margin-top:22px" onclick="{{ nochEiner }}">Noch einen Mittwoch</button>
+                </sc-if>
               </div>
               <div>
                 <div class="eyebrow">Was danach passiert</div>
                 <ul class="list" style="margin-top:18px">
                   <li><span class="tick"></span><span>Du bekommst sofort eine Mail mit Termin und Adresse, bei Online mit dem Zoom-Link.</span></li>
-                  <li><span class="tick"></span><span>In derselben Mail ist ein Abmeldelink. Ein Klick, fertig, kein Konto nötig.</span></li>
+                  <li><span class="tick"></span><span>In derselben Mail ist ein Abmeldelink. Ein Klick auf den Link, einer zur Bestätigung, kein Konto nötig.</span></li>
                   <li><span class="tick"></span><span>Am Vortag kommt eine kurze Erinnerung.</span></li>
                   <li><span class="tick"></span><span>In der Mail steht die PayPal-Adresse. Am liebsten zahlst du vorab, aber PayPal geht auch noch vor Ort. Bar vor Ort genauso.</span></li>
                   <li><span class="tick"></span><span>Wellpass gilt nur vor Ort. Du scannst vor der Stunde wie gewohnt den QR-Code in der Wellpass-App und zahlst nichts. Anmelden musst du dich hier trotzdem. Über Zoom kostet die Stunde 19 Euro.</span></li>
                 </ul>
+
+                <!-- Nur im Prototyp: Ersatz für die Mail, die nicht verschickt
+                     wird. Zeigt die Anmeldungen aus diesem Browser mit ihrem
+                     Abmeldelink. -->
+                <sc-if value="{{ meine.length }}">
+                  <div class="eyebrow" style="margin-top:36px">Deine Anmeldungen</div>
+                  <p class="hinweis" style="margin:10px 0 14px">Nur im Prototyp: die Anmeldungen aus diesem Browser. Später steht der Abmeldelink in deiner Mail.</p>
+                  <ul class="list">
+                    <sc-for list="{{ meine }}" as="m">
+                      <li><span class="tick"></span><span>{{ m.lang }}, {{ m.ortText }} · <a href="{{ m.link }}">Abmelden</a></span></li>
+                    </sc-for>
+                  </ul>
+                </sc-if>
               </div>
             </div>
           </div>
@@ -188,67 +261,238 @@
       data-dc-script
       data-props='{}'
     >
+      // Die Seite rechnet nichts selbst: Termine, Status und Regeln kommen aus
+      // buchung.js. Hier steht nur, was die Seite anzeigt und was ein Klick
+      // auslöst. Die Seite hält keine Daten, sie fragt bei jedem Zeichnen neu.
       class Component extends DCLogic {
-        // Erzeugt die nächsten acht Mittwoche aus dem heutigen Datum, damit der
-        // Entwurf nicht altert. In der gebauten Seite kommen die Termine aus der
-        // Serienregel im Admin. Dieser Code ist nur fürs Mockup.
-        renderVals() {
-          const MITTWOCH = 3;
-          const jetzt = new Date();
-          const heute = new Date(jetzt.getFullYear(), jetzt.getMonth(), jetzt.getDate());
+        constructor(p) {
+          super(p);
+          const B = window.Buchung;
+          const person = B.personLesen();
+          // Die Seite hält nur die Wünsche fest (welcher Mittwoch, vor Ort
+          // oder online, Zahlweg). Was davon gerade geht, entscheidet der
+          // gewählte Termin, siehe Buchung.wirksam().
+          // Der gewählte Mittwoch ist echter Zustand, kein Fallback beim
+          // Zeichnen: Läuft der Anmeldeschluss ab, während die Seite offen
+          // ist, bleibt er gewählt und die Seite sagt, dass er zu ist, statt
+          // still den nächsten zu nehmen.
+          this.state = {
+            form: { termin: this.ersterFreie(), ort: 'vorort', zahlweg: 'paypal', name: person.name, mail: person.mail, honig: '' },
+            fehler: null,
+            bestaetigung: null,
+            abmeldung: this.abmeldungAusUrl(),
+          };
+          // Was zuletzt als Wahl angezeigt wurde, genau das wird abgeschickt
+          this.gezeigt = null;
+          this.gezeigteWahl = null;
+          this.aufSpeicher = () => this.forceUpdate();
+        }
 
-          // Anmeldeschluss 18:30: danach ist der heutige Mittwoch keine Option mehr.
-          const schlussVorbei = jetzt.getDay() === MITTWOCH &&
-            (jetzt.getHours() > 18 || (jetzt.getHours() === 18 && jetzt.getMinutes() >= 30));
+        // Ändert der Admin im anderen Tab etwas, zeichnet die Seite neu
+        componentDidMount() { window.addEventListener('storage', this.aufSpeicher); }
+        componentWillUnmount() { window.removeEventListener('storage', this.aufSpeicher); }
 
-          const erster = new Date(heute);
-          let tageBisMittwoch = (MITTWOCH - heute.getDay() + 7) % 7;
-          if (tageBisMittwoch === 0 && schlussVorbei) tageBisMittwoch = 7;
-          erster.setDate(heute.getDate() + tageBisMittwoch);
+        ersterFreie() {
+          const t = window.Buchung.termine().find((x) => x.buchbar);
+          return t ? t.key : null;
+        }
 
-          const alle = [];
-          for (let i = 0; i < 8; i++) {
-            const tag = new Date(erster);
-            tag.setDate(erster.getDate() + i * 7);
-            const datum = tag.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' });
-            // Drei Zustände: frei, vor Ort ausgebucht, abgesagt. Hier fest
-            // verdrahtete Beispiele; in der gebauten Seite kommt „ausgebucht"
-            // aus der Platzzahl und „abgesagt" von Bine. Ausgebucht heißt immer
-            // nur vor Ort — über Zoom gibt es keine Platzgrenze.
-            const abgesagt = i === 2;
-            const voll = i === 1;
-            alle.push({
-              cls: abgesagt ? 'termin is-off' : voll ? 'termin is-online' : 'termin',
-              // Der erste Eintrag ist immer der nächstliegende Mittwoch, höchstens
-              // sechs Tage entfernt. Deshalb trägt nur er die Zusatzangabe.
-              wann: (i > 0 ? 'Mittwoch, ' : tageBisMittwoch === 0 ? 'Heute, Mittwoch, ' : 'Diesen Mittwoch, ') + datum,
-              wo: abgesagt
-                ? 'Fällt aus, Bine ist im Urlaub'
-                : voll
-                  ? '19:30–20:30 · Vor Ort ausgebucht, über Zoom ist noch Platz'
-                  : '19:30–20:30 · SOMOS, Lindwurmstraße 92A · auch per Zoom',
-              status: abgesagt ? 'Abgesagt' : voll ? 'Nur noch online' : 'Platz frei',
-              statusCls: 'status ' + (abgesagt ? 'aus' : voll ? 'voll' : 'frei'),
-              // Ausgebuchte Mittwoche bleiben wählbar, nur eben online.
-              offen: !abgesagt,
-              zu: abgesagt,
-              // Kurzform für die Auswahlpillen im Formular, dort ist kein Platz
-              // für den ganzen Datumsnamen.
-              kurz: tag.toLocaleDateString('de-DE', { day: 'numeric', month: 'short' }),
-              // Der Renderer im Mockup gibt disabled nicht mit aus, deshalb
-              // trägt die Pille ihren Zustand zusätzlich als Klasse.
-              pille: abgesagt ? 'opt is-aus' : voll ? 'opt is-voll' : 'opt',
+        // ?abmelden=TOKEN aus der Bestätigungsmail
+        abmeldungAusUrl() {
+          const token = new URLSearchParams(window.location.search).get('abmelden');
+          if (!token) return null;
+          const B = window.Buchung;
+          const a = B.suchen(token);
+          if (!a) return { token, status: 'unbekannt' };
+          const status = a.storniertAm ? 'schon' : B.termin(a.termin).vorbei ? 'vorbei' : 'frage';
+          return { token, status, anmeldung: a };
+        }
+
+        setzen(patch) {
+          this.setState((s) => ({ form: Object.assign({}, s.form, patch), fehler: null }));
+        }
+
+        absenden() {
+          const B = window.Buchung;
+          const f = this.state.form;
+          const w = this.gezeigteWahl || B.wirksam(null, f.ort, f.zahlweg);
+          const r = B.anmelden({ termin: this.gezeigt || f.termin || '', name: f.name, mail: f.mail, ort: w.ort, zahlweg: w.zahlweg, honig: f.honig });
+          if (!r.ok) {
+            this.setState({ fehler: r }, () => {
+              // Zum Feld springen, das fehlt: auf dem Handy liegt der Knopf
+              // zwei Bildschirme unter den Eingaben
+              const el = r.feld && document.getElementById(r.feld);
+              if (el) { el.focus({ preventScroll: true }); el.scrollIntoView({ block: 'center' }); }
             });
+            return;
+          }
+          B.personMerken(r.anmeldung.name, r.anmeldung.mail);
+          B.meineMerken(r.anmeldung.token);
+          const a = r.anmeldung;
+          const link = this.abmeldeLink(a.token);
+          this.setState({
+            fehler: null,
+            form: Object.assign({}, f, { name: a.name, mail: a.mail, honig: '' }),
+            bestaetigung: {
+              titel: 'Bis ' + r.termin.lang + '!',
+              satz: a.ort === 'online'
+                ? 'Du bist über Zoom dabei, den Link hast du in der Mail.'
+                : 'Du bist vor Ort dabei. Komm etwa fünf Minuten vorher, der Eingang ist im Hinterhof.',
+              mail: a.mail,
+              text: B.bestaetigungsMail(a, link),
+              link,
+            },
+          }, () => {
+            const el = document.getElementById('formular');
+            if (el) el.scrollIntoView({ block: 'start' });
+          });
+        }
+
+        abmeldeLink(token) {
+          return window.location.pathname.split('/').pop() + '?abmelden=' + token;
+        }
+
+        abmelden() {
+          const r = window.Buchung.abmelden(this.state.abmeldung.token);
+          this.setState({ abmeldung: Object.assign({}, this.state.abmeldung, { status: r.ok ? 'fertig' : r.fehler }) });
+        }
+
+        // Zurück zum Formular, mit dem nächsten Mittwoch vorausgewählt, für
+        // den diese Mailadresse noch nicht auf der Liste steht
+        nochEiner() {
+          const B = window.Buchung;
+          const mail = this.state.form.mail.trim().toLowerCase();
+          const frei = B.termine().find((t) => t.buchbar && !B.aktive(t.key).some((a) => a.mail === mail));
+          this.setState((s) => ({
+            bestaetigung: null, fehler: null,
+            form: Object.assign({}, s.form, { termin: frei ? frei.key : null }),
+          }), () => {
+            const el = document.getElementById('formular');
+            if (el) el.scrollIntoView({ block: 'start' });
+          });
+        }
+
+        renderVals() {
+          const B = window.Buchung;
+          const jetzt = B.jetzt();
+          const liste = B.termine(jetzt);
+          const serie = B.serie();
+          const s = this.state;
+
+          // Gewählt ist der Mittwoch im Zustand. Ist er nicht mehr buchbar
+          // (Anmeldeschluss vorbei, von Bine abgesagt), gibt es keinen
+          // Termin und die Zeile über dem Knopf sagt, warum.
+          const gewaehlt = s.form.termin ? B.termin(s.form.termin, jetzt) : null;
+          const inListe = !!gewaehlt && liste.some((x) => x.key === gewaehlt.key);
+          const t = gewaehlt && inListe && gewaehlt.buchbar ? gewaehlt : null;
+          let warum = '';
+          if (gewaehlt && !t) {
+            warum = gewaehlt.abgesagt ? gewaehlt.lang + ' fällt aus.'
+              : !inListe || gewaehlt.geschlossen ? 'Für ' + gewaehlt.lang + ' ist die Anmeldung seit ' + gewaehlt.schlussText + ' Uhr geschlossen.'
+              : gewaehlt.lang + ' ist ausgebucht.';
+            warum += ' Bitte wähle oben einen anderen Mittwoch.';
+          } else if (!gewaehlt) {
+            warum = 'Gerade ist kein Mittwoch buchbar.';
+          }
+          this.gezeigt = t ? t.key : null;
+          const w = B.wirksam(t, s.form.ort, s.form.zahlweg);
+          this.gezeigteWahl = w;
+          const online = w.ort === 'online';
+
+          const anzeige = liste.map((x, i) => ({
+            cls: 'termin ' + x.cls,
+            // Nur der erste Eintrag sagt, wie nah er ist; alle weiteren
+            // tragen das Datum
+            wann: i === 0 ? B.bezeichnung(x, jetzt) : x.lang,
+            wo: x.wo,
+            status: x.status,
+            statusCls: 'status ' + x.statusCls,
+          }));
+
+          // Ausgebuchte Mittwoche bleiben wählbar, nur eben online. Abgesagte
+          // stehen mit drin, sonst fehlt in der Reihe ein Datum.
+          const pillen = liste.map((x) => ({
+            kurz: x.kurz,
+            zu: !x.buchbar,
+            cls: t && x.key === t.key ? 'opt is-on'
+              : 'opt' + (x.abgesagt ? ' is-aus' : !x.buchbar ? ' is-gesperrt' : x.voll ? ' is-voll' : ''),
+            waehlen: () => this.setzen({ termin: x.key }),
+          }));
+
+          const vorOrtZu = !t || !t.vorOrtMoeglich;
+          const onlineZu = !t || !t.onlineMoeglich;
+          let ortHinweis = 'Den Zoom-Link bekommst du mit der Bestätigungsmail.';
+          if (t && t.voll && t.onlineMoeglich) ortHinweis = 'Vor Ort ist dieser Mittwoch ausgebucht, über Zoom ist noch Platz. Den Link bekommst du mit der Bestätigungsmail.';
+          else if (t && t.nurOnline) ortHinweis = 'Diesen Mittwoch gibt es nur über Zoom. Den Link bekommst du mit der Bestätigungsmail.';
+          else if (t && t.nurVorOrt) ortHinweis = 'Diesen Mittwoch gibt es keinen Zoom, nur vor Ort.';
+
+          const opt = (an, zu) => 'opt' + (an ? ' is-on' : zu ? ' is-gesperrt' : '');
+
+          // Abmelden über den Link aus der Mail
+          let abmeldung = null;
+          if (s.abmeldung) {
+            const a = s.abmeldung.anmeldung;
+            const st = s.abmeldung.status;
+            abmeldung = {
+              frage: st === 'frage', fertig: st === 'fertig', schon: st === 'schon', unbekannt: st === 'unbekannt', vorbei: st === 'vorbei',
+              lang: a ? B.datumLang(a.termin) : '',
+              name: a ? a.name : '',
+              ortText: a ? B.ORT_TEXT[a.ort] : '',
+              bestaetigen: () => this.abmelden(),
+            };
           }
 
-          // Vorausgewählt ist der erste buchbare Mittwoch.
-          const ersterOffener = alle.find((t) => t.offen);
-          if (ersterOffener) ersterOffener.pille = 'opt is-on';
+          // Anmeldungen aus diesem Browser, nur im Prototyp
+          const meine = B.meineLesen()
+            .map((tok) => B.suchen(tok))
+            .filter((a) => a && !a.storniertAm && !B.termin(a.termin, jetzt).vorbei)
+            .map((a) => ({
+              lang: B.datumLang(a.termin),
+              ortText: B.ORT_TEXT[a.ort],
+              link: this.abmeldeLink(a.token),
+            }));
+
+          const fehler = s.fehler || {};
 
           return {
-            termine: alle.slice(0, 4),
-            spaeter: alle.slice(4),
-            pillen: alle,
+            serie,
+            termine: anzeige.slice(0, 4),
+            spaeter: anzeige.slice(4),
+            abmeldung,
+            zeigeFormular: !s.bestaetigung,
+            bestaetigung: s.bestaetigung,
+            form: s.form,
+            aufName: (e) => this.setzen({ name: e.target.value }),
+            aufMail: (e) => this.setzen({ mail: e.target.value }),
+            aufHonig: (e) => this.setzen({ honig: e.target.value }),
+            pillen,
+            vorOrtCls: opt(!online, vorOrtZu),
+            onlineCls: opt(online, onlineZu),
+            vorOrtZu,
+            onlineZu,
+            waehleVorOrt: () => this.setzen({ ort: 'vorort' }),
+            waehleOnline: () => this.setzen({ ort: 'online' }),
+            ortHinweis,
+            paypalCls: opt(w.zahlweg === 'paypal', false),
+            barCls: opt(w.zahlweg === 'bar', online),
+            wellpassCls: opt(w.zahlweg === 'wellpass', online),
+            barZu: online,
+            wellpassZu: online,
+            waehlePaypal: () => this.setzen({ zahlweg: 'paypal' }),
+            waehleBar: () => this.setzen({ zahlweg: 'bar' }),
+            waehleWellpass: () => this.setzen({ zahlweg: 'wellpass' }),
+            zahlHinweis: online ? 'Über Zoom gilt Wellpass nicht, und bar geht da auch nicht. Bleibt PayPal, 19 Euro.' : '',
+            // Die Meldung steht beim Feld, das fehlt, sonst über dem Knopf
+            fehlerName: fehler.feld === 'name' ? fehler.fehler : '',
+            fehlerMail: fehler.feld === 'mail' ? fehler.fehler : '',
+            fehlerAllgemein: fehler.fehler && !fehler.feld ? fehler.fehler : '',
+            wahl: t
+              ? 'Deine Anmeldung: ' + t.lang + ', ' + t.uhrzeit + ' Uhr · ' + B.ORT_TEXT[w.ort] + ' · ' + B.ZAHLWEG_TEXT[w.zahlweg]
+              : warum,
+            absendenZu: !t,
+            absenden: () => this.absenden(),
+            nochEiner: () => this.nochEiner(),
+            meine,
           };
         }
       }

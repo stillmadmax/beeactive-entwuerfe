@@ -6,6 +6,7 @@
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
     <title>Bee Active · Yoga in München-Sendling</title>
     <script src="./support.js"></script>
+    <script src="./buchung.js"></script>
     <script src="./bewegung.js" defer></script>
     <script src="./klipps.js" defer></script>
   </head>
@@ -44,8 +45,8 @@
               <div class="eyebrow">Yoga in München-Sendling</div>
               <h1 class="serif h1" style="margin:16px 0 0">Eine Stunde in der Woche, die dir gehört</h1>
               <div class="chips">
-                <span class="chip">Mittwoch 19:30 Uhr</span>
-                <span class="chip">60 Minuten</span>
+                <span class="chip">Mittwoch {{ serie.uhrzeit }} Uhr</span>
+                <span class="chip">{{ serie.dauer }} Minuten</span>
                 <span class="chip">Vor Ort oder Zoom</span>
                 <span class="chip">19 Euro oder Wellpass</span>
               </div>
@@ -198,22 +199,10 @@
       data-props='{}'
     >
       class Component extends DCLogic {
-        // Datum des Abschluss-Blocks aus dem heutigen Datum gerechnet, damit
-        // der Entwurf nicht altert — gleiche Logik wie auf der Anmeldeseite,
-        // inklusive Anmeldeschluss 18:30 am Kurstag. Nur fürs Mockup.
+        // Der Abschluss-Block nennt denselben Mittwoch, den das Formular auf
+        // der Anmeldeseite vorauswählt; Uhrzeit und Dauer kommen aus der Serie.
         renderVals() {
-          const MITTWOCH = 3;
-          const jetzt = new Date();
-          const heute = new Date(jetzt.getFullYear(), jetzt.getMonth(), jetzt.getDate());
-          const schlussVorbei = jetzt.getDay() === MITTWOCH &&
-            (jetzt.getHours() > 18 || (jetzt.getHours() === 18 && jetzt.getMinutes() >= 30));
-          let tage = (MITTWOCH - heute.getDay() + 7) % 7;
-          if (tage === 0 && schlussVorbei) tage = 7;
-          heute.setDate(heute.getDate() + tage);
-          const datum = heute.toLocaleDateString('de-DE', { day: 'numeric', month: 'long' });
-          return {
-            naechster: (tage === 0 ? 'Heute, Mittwoch, ' : 'Diesen Mittwoch, ') + datum + ', 19:30 Uhr',
-          };
+          return { naechster: window.Buchung.naechsterText(), serie: window.Buchung.serie() };
         }
       }
     </script>
