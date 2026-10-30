@@ -8,6 +8,14 @@
   --ink:#241D17;
   --muted:#6F6357;
   --rose:#A87A70;
+  /* Rosé für Text und Button-Flächen. --rose selbst erreicht als Schrift auf
+     Creme nur 3,5:1, weiße Schrift darauf 3,7:1; nötig sind 4,5:1. Diese
+     Stufe schafft 5,8:1 auf Creme, 4,6:1 auf Sand und 6,1:1 mit Weiß.
+     --rose bleibt für Deko: Punkte, Haken. */
+  --rose-text:#82574E;
+  /* Ränder von Eingabefeldern und Auswahlpillen. --clay ist dafür zu blass
+     (1,7:1 auf Weiß), Bedienelemente brauchen 3:1 (WCAG 1.4.11). */
+  --line:#9C8570;
   --deep:#3A2E26;
   /* Status der Termine. Gedeckte Töne, damit sie neben Rosé und Sand nicht
      schreien, aber kräftig genug, um sich vom Grau der Nebentexte abzuheben. */
@@ -18,7 +26,7 @@
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--cream);color:var(--ink);font-family:'Work Sans',system-ui,sans-serif;font-size:17.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
-a{color:var(--rose);text-decoration:none;border-bottom:1px solid rgba(168,122,112,0.4)}
+a{color:var(--rose-text);text-decoration:none;border-bottom:1px solid rgba(130,87,78,0.4)}
 a:hover{color:var(--ink);border-bottom-color:var(--ink)}
 img{display:block;max-width:100%}
 .wrap{max-width:var(--max);margin:0 auto;padding-left:20px;padding-right:20px}
@@ -27,13 +35,13 @@ img{display:block;max-width:100%}
 .h2{font-size:clamp(26px,3.4vw,42px)}
 .h3{font-size:clamp(19px,2vw,26px)}
 .lede{font-size:clamp(17px,1.5vw,21px);line-height:1.65}
-.eyebrow{font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose);font-weight:600}
+.eyebrow{font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--rose-text);font-weight:600}
 .sec{padding-top:88px;padding-bottom:88px}
-.btn{display:inline-block;background:var(--rose);color:#fff;padding:16px 32px;font-weight:500;font-size:16px;border-radius:999px;border:0;white-space:nowrap;text-align:center;cursor:pointer;font-family:inherit}
+.btn{display:inline-block;background:var(--rose-text);color:#fff;padding:16px 32px;font-weight:500;font-size:16px;border-radius:999px;border:0;white-space:nowrap;text-align:center;cursor:pointer;font-family:inherit}
 .btn:hover{background:var(--deep);color:#fff;border:0}
 .nav{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0}
 .navlinks{display:flex;gap:28px;font-size:16px}
-.navlinks a{border:0;color:var(--muted)}
+.navlinks a{border:0;color:var(--muted);padding:10px 0}
 .navlinks a:hover{color:var(--ink)}
 .navlinks a.is-here{color:var(--ink);font-weight:500}
 .mark{font-family:'Lora',serif;font-weight:600;letter-spacing:0.2em;font-size:15px;color:var(--ink);white-space:nowrap}
@@ -43,23 +51,23 @@ img{display:block;max-width:100%}
 .hero .inner{position:relative;padding:clamp(24px,4vw,56px);color:#fff;max-width:760px;text-shadow:0 1px 28px rgba(20,14,10,0.4)}
 .hero .eyebrow{color:rgba(255,255,255,0.88)}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
-.chip{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.36);color:#fff;padding:7px 14px;border-radius:999px;font-size:14px;text-shadow:none}
+.chip{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.36);color:#fff;padding:7px 14px;border-radius:8px;font-size:14px;text-shadow:none}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
 .soft{background:var(--sand);border-radius:24px;padding:clamp(28px,4vw,64px)}
 .deepblock{background:var(--deep);color:var(--cream);border-radius:24px;padding:clamp(28px,4vw,64px)}
 .deepblock .eyebrow{color:var(--clay)}
 .qs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .qcard{background:#fff;border-radius:20px;padding:28px;border:1px solid rgba(217,196,174,0.5)}
-.qname{margin-top:16px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--rose);font-weight:600}
+.qname{margin-top:16px;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:var(--rose-text);font-weight:600}
 .rounded{border-radius:20px;object-fit:cover;width:100%}
 .list{list-style:none;margin:0;padding:0;display:grid;gap:16px}
 .list li{display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:start}
 .tick{width:11px;height:11px;border-radius:50%;background:var(--rose);margin-top:9px}
 .quali{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
-.quali span{background:var(--sand);padding:8px 16px;font-size:14px;border-radius:999px;color:var(--ink)}
+.quali span{background:var(--sand);padding:8px 16px;font-size:14px;border-radius:8px;color:var(--ink)}
 .foot{padding:40px 0 56px;display:flex;justify-content:space-between;gap:24px 40px;flex-wrap:wrap;font-size:15px;color:var(--muted);border-top:1px solid var(--clay)}
 .footlinks{display:flex;gap:24px;flex-wrap:wrap}
-.foot a{border:0;color:var(--muted)}
+.foot a{border:0;color:var(--muted);display:inline-block;padding:10px 0}
 .foot a:hover{color:var(--ink)}
 .stickybar{display:none}
 
@@ -100,9 +108,9 @@ img{display:block;max-width:100%}
 .termin .wann{font-family:'Lora',Georgia,serif;font-size:20px;font-weight:500}
 .termin .wo{color:var(--muted);font-size:15px;margin-top:2px}
 .optionen{display:flex;gap:8px;flex-wrap:wrap}
-.opt{border:1px solid var(--clay);background:transparent;border-radius:999px;padding:9px 18px;font-size:15px;font-family:inherit;color:var(--ink);cursor:pointer}
-.opt:hover{border-color:var(--rose)}
-.opt.is-on{background:var(--rose);border-color:var(--rose);color:#fff}
+.opt{border:1px solid var(--line);background:transparent;border-radius:999px;padding:9px 18px;font-size:15px;font-family:inherit;color:var(--ink);cursor:pointer}
+.opt:hover{border-color:var(--rose-text)}
+.opt.is-on{background:var(--rose-text);border-color:var(--rose-text);color:#fff}
 /* Abgesagte Mittwoche stehen in der Auswahl mit drin, sonst fehlt in der Reihe
    ein Datum und man fragt sich, warum. Wählbar sind sie nicht. Die Klasse ist
    nötig, weil der Mockup-Renderer das disabled-Attribut nicht mit ausgibt; in
@@ -115,19 +123,22 @@ img{display:block;max-width:100%}
 .opt.is-aus{color:var(--rot);border-color:rgba(178,59,46,0.3);text-decoration:line-through}
 .opt.is-aus:hover{border-color:rgba(178,59,46,0.3)}
 .feld{display:grid;gap:7px;margin-bottom:18px}
-.feld label{font-size:15px;color:var(--muted)}
-.feld input{font:inherit;font-size:17px;padding:14px 16px;border:1px solid var(--clay);border-radius:14px;background:#fff;color:var(--ink);width:100%}
-.feld input:focus{outline:2px solid var(--rose);outline-offset:1px;border-color:var(--rose)}
+.feld label,.feld legend{font-size:15px;color:var(--muted)}
+fieldset.feld{border:0;padding:0;margin:0 0 18px;min-width:0}
+.feld legend{padding:0}
+.feld input{font:inherit;font-size:17px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);width:100%}
+.feld input:focus{outline:2px solid var(--rose-text);outline-offset:1px;border-color:var(--rose-text)}
 .hinweis{font-size:15px;color:var(--muted)}
-/* Terminstatus als hinterlegte Pille, in derselben Form wie die Auswahlpillen
-   im Formular: frei, ausgebucht, abgesagt. */
-.status{display:inline-block;border-radius:999px;padding:6px 15px;font-size:14px;font-weight:500;border:1px solid;white-space:nowrap}
+/* Terminstatus als hinterlegtes Schild: frei, ausgebucht, abgesagt. Eckig
+   wie Kopfbild-Chips und Qualifikationen, denn die runde Pille heißt auf der
+   Seite „antippbar", und der Status ist nur Information. */
+.status{display:inline-block;border-radius:8px;padding:6px 15px;font-size:14px;font-weight:500;border:1px solid;white-space:nowrap}
 .status.frei{color:var(--gruen);background:rgba(63,122,70,0.10);border-color:rgba(63,122,70,0.3)}
 .status.voll{color:var(--bernstein);background:rgba(138,94,16,0.10);border-color:rgba(138,94,16,0.3)}
 .status.aus{color:var(--rot);background:rgba(178,59,46,0.09);border-color:rgba(178,59,46,0.28)}
 /* Aufklappbare Wochen fünf bis acht */
 .mehr{margin-top:14px}
-.mehr summary{display:block;cursor:pointer;color:var(--rose);font-size:16px;padding:14px 0}
+.mehr summary{display:block;cursor:pointer;color:var(--rose-text);font-size:16px;padding:14px 0}
 .mehr summary::-webkit-details-marker{display:none}
 .mehr summary::before{content:"+ ";font-weight:600}
 .mehr[open] summary::before{content:"– "}
@@ -146,13 +157,13 @@ img{display:block;max-width:100%}
 .wahl{margin:0 0 12px;font-size:15px;color:var(--ink);font-weight:500}
 /* Zweitknopf neben dem Hauptknopf, gleiche Form, ohne Füllung */
 button.btn{line-height:inherit}
-.btn.zweit{background:transparent;color:var(--ink);border:1px solid var(--clay)}
+.btn.zweit{background:transparent;color:var(--ink);border:1px solid var(--line)}
 .btn.zweit:hover{background:transparent;color:var(--ink);border:1px solid var(--ink)}
 /* Gesperrte Auswahlpillen (vor Ort ausgebucht, Wellpass über Zoom), im
    Unterschied zu is-aus und is-voll ohne eigene Farbe, nur zurückgenommen */
 .opt:disabled{cursor:default}
 .opt.is-gesperrt{color:var(--muted);opacity:0.5}
-.opt.is-gesperrt:hover{border-color:var(--clay)}
+.opt.is-gesperrt:hover{border-color:var(--line)}
 /* Honigtopf: aus dem sichtbaren Bereich geschoben, nicht display:none,
    sonst lassen Bots das Feld aus */
 .honig{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
@@ -169,20 +180,20 @@ button.btn{line-height:inherit}
 .einstellungen{display:grid;gap:10px;padding-top:14px;border-top:1px solid rgba(217,196,174,0.5)}
 /* Tippziele: Bine hakt nach der Stunde auf dem Handy ab, mindestens 40px */
 .stepper{display:inline-flex;align-items:center;gap:4px;font-size:15px;color:var(--muted)}
-.stepper button{width:40px;height:40px;border-radius:50%;border:1px solid var(--clay);background:transparent;font:inherit;font-size:18px;line-height:1;color:var(--ink);cursor:pointer}
-.stepper button:hover{border-color:var(--rose)}
+.stepper button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:transparent;font:inherit;font-size:18px;line-height:1;color:var(--ink);cursor:pointer}
+.stepper button:hover{border-color:var(--rose-text)}
 .stepper b{display:inline-block;min-width:2ch;text-align:center;color:var(--ink);font-weight:500}
 .zeitfeld{display:inline-flex;align-items:center;gap:8px;font-size:15px;color:var(--muted)}
 /* Eingabefelder im Admin nicht unter 16px: iOS Safari zoomt sonst beim
    Antippen in die Seite, und die bleibt danach breiter als der Bildschirm
    (nach Erfahrungsberichten, nicht aus einer Apple-Quelle) */
-.zeitfeld input{font:inherit;font-size:16px;padding:6px 10px;border:1px solid var(--clay);border-radius:999px;background:#fff;color:var(--ink)}
+.zeitfeld input{font:inherit;font-size:16px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink)}
 /* Teilnehmerliste unter dem Termin */
 .teilnehmer{flex-basis:100%;display:grid;gap:10px;padding-top:14px;border-top:1px solid rgba(217,196,174,0.5)}
 .teilnehmer .zeile{display:grid;grid-template-columns:1fr auto auto auto;gap:8px 16px;align-items:center;font-size:15px}
 .teilnehmer .zeile .wer{overflow-wrap:anywhere}
 .haken{display:inline-flex;align-items:center;gap:10px;min-height:40px;padding:0 6px;font-size:15px;color:var(--ink);white-space:nowrap;cursor:pointer}
-.haken input{width:22px;height:22px;margin:0;accent-color:var(--rose)}
+.haken input{width:22px;height:22px;margin:0;accent-color:var(--rose-text)}
 .eintragen{margin-top:10px;padding:18px 20px;border-radius:16px;background:var(--cream);display:grid;gap:10px}
 .eintragen .feld{margin-bottom:0}
 .eintragen input{padding:10px 14px;font-size:16px}
@@ -207,7 +218,7 @@ button.btn{line-height:inherit}
      darunter. Sie scrollt waagerecht, falls die Links nicht nebeneinander
      passen — die Seite selbst läuft dabei nicht über. */
   .nav{flex-wrap:wrap;row-gap:10px}
-  .navlinks{order:3;width:100%;gap:20px;font-size:15px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .navlinks{order:3;width:100%;gap:20px;margin-top:-10px;font-size:15px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .navlinks::-webkit-scrollbar{display:none}
   .navlinks a{white-space:nowrap}
 }
@@ -234,7 +245,7 @@ button.btn{line-height:inherit}
   .stickybar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--cream);border-top:1px solid var(--clay);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
   .stickybar .btn{display:block;width:100%;padding:16px 20px}
   .foot{padding-bottom:120px;gap:20px}
-  .footlinks{gap:14px 20px}
+  .footlinks{gap:0 20px}
   .termin{flex-direction:column;align-items:stretch;gap:14px}
   .termin .btn{width:100%}
   /* Die Statuspille bleibt so breit wie ihr Text, statt über die Karte zu laufen. */
@@ -294,11 +305,11 @@ button.btn{line-height:inherit}
   .feld input{transition:border-color .25s var(--ease)}
   .mehr summary{transition:color .25s var(--ease)}
   .btn:active{transform:scale(.98)}
-  /* Seitenlinks bekommen einen Strich, der von links einläuft. bottom:2px
-     statt darunter, weil die Linkzeile mobil waagerecht scrollt und damit
-     auch senkrecht beschneidet. */
+  /* Seitenlinks bekommen einen Strich, der von links einläuft. bottom:12px
+     (10px Innenabstand fürs Tippziel plus 2px) statt darunter, weil die
+     Linkzeile mobil waagerecht scrollt und damit auch senkrecht beschneidet. */
   .navlinks a{position:relative}
-  .navlinks a::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+  .navlinks a::after{content:"";position:absolute;left:0;right:0;bottom:12px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
   .navlinks a.is-here::after{transform:scaleX(1)}
   /* Nur mit Maus: auf dem Handy bliebe der Hover-Zustand nach dem Tippen hängen */
   @media (hover:hover){

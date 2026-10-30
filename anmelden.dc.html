@@ -135,33 +135,36 @@
                     <label for="website">Website</label>
                     <input id="website" type="text" tabindex="-1" autocomplete="off" value="{{ form.honig }}" oninput="{{ aufHonig }}" />
                   </div>
-                  <div class="feld">
-                    <label>Welcher Mittwoch?</label>
+                  <!-- Jede Pillengruppe ist ein fieldset: die Frage wird als
+                       legend mit vorgelesen, und aria-pressed sagt, welche
+                       Pille gewählt ist. Das zeigt sonst nur die Füllung. -->
+                  <fieldset class="feld">
+                    <legend>Welcher Mittwoch?</legend>
                     <div class="optionen" style="margin-top:8px">
                       <sc-for list="{{ pillen }}" as="t">
-                        <button class="{{ t.cls }}" type="button" disabled="{{ t.zu }}" onclick="{{ t.waehlen }}">{{ t.kurz }}</button>
+                        <button class="{{ t.cls }}" type="button" aria-pressed="{{ t.an }}" disabled="{{ t.zu }}" onclick="{{ t.waehlen }}">{{ t.kurz }}</button>
                       </sc-for>
                     </div>
-                  </div>
-                  <div class="feld">
-                    <label>Vor Ort oder online?</label>
+                  </fieldset>
+                  <fieldset class="feld">
+                    <legend>Vor Ort oder online?</legend>
                     <div class="optionen" style="margin-top:8px">
-                      <button class="{{ vorOrtCls }}" type="button" disabled="{{ vorOrtZu }}" onclick="{{ waehleVorOrt }}">Vor Ort</button>
-                      <button class="{{ onlineCls }}" type="button" disabled="{{ onlineZu }}" onclick="{{ waehleOnline }}">Online</button>
+                      <button class="{{ vorOrtCls }}" type="button" aria-pressed="{{ vorOrtAn }}" disabled="{{ vorOrtZu }}" onclick="{{ waehleVorOrt }}">Vor Ort</button>
+                      <button class="{{ onlineCls }}" type="button" aria-pressed="{{ onlineAn }}" disabled="{{ onlineZu }}" onclick="{{ waehleOnline }}">Online</button>
                     </div>
                     <p class="hinweis" style="margin:10px 0 0">{{ ortHinweis }}</p>
-                  </div>
-                  <div class="feld">
-                    <label>Wie zahlst du?</label>
+                  </fieldset>
+                  <fieldset class="feld">
+                    <legend>Wie zahlst du?</legend>
                     <div class="optionen" style="margin-top:8px">
-                      <button class="{{ paypalCls }}" type="button" onclick="{{ waehlePaypal }}">PayPal</button>
-                      <button class="{{ barCls }}" type="button" disabled="{{ barZu }}" onclick="{{ waehleBar }}">Bar vor Ort</button>
-                      <button class="{{ wellpassCls }}" type="button" disabled="{{ wellpassZu }}" onclick="{{ waehleWellpass }}">Wellpass, nur vor Ort</button>
+                      <button class="{{ paypalCls }}" type="button" aria-pressed="{{ paypalAn }}" onclick="{{ waehlePaypal }}">PayPal</button>
+                      <button class="{{ barCls }}" type="button" aria-pressed="{{ barAn }}" disabled="{{ barZu }}" onclick="{{ waehleBar }}">Bar vor Ort</button>
+                      <button class="{{ wellpassCls }}" type="button" aria-pressed="{{ wellpassAn }}" disabled="{{ wellpassZu }}" onclick="{{ waehleWellpass }}">Wellpass, nur vor Ort</button>
                     </div>
                     <sc-if value="{{ zahlHinweis }}">
                       <p class="hinweis" style="margin:10px 0 0">{{ zahlHinweis }}</p>
                     </sc-if>
-                  </div>
+                  </fieldset>
                   <sc-if value="{{ fehlerAllgemein }}">
                     <p class="fehler" role="alert">{{ fehlerAllgemein }}</p>
                   </sc-if>
@@ -414,6 +417,7 @@
           const pillen = liste.map((x) => ({
             kurz: x.kurz,
             zu: !x.buchbar,
+            an: String(!!t && x.key === t.key),
             cls: t && x.key === t.key ? 'opt is-on'
               : 'opt' + (x.abgesagt ? ' is-aus' : !x.buchbar ? ' is-gesperrt' : x.voll ? ' is-voll' : ''),
             waehlen: () => this.setzen({ termin: x.key }),
@@ -427,6 +431,8 @@
           else if (t && t.nurVorOrt) ortHinweis = 'Diesen Mittwoch gibt es keinen Zoom, nur vor Ort.';
 
           const opt = (an, zu) => 'opt' + (an ? ' is-on' : zu ? ' is-gesperrt' : '');
+          // aria-pressed als Text, damit sicher "true" oder "false" im Attribut steht
+          const gedrueckt = (an) => String(!!an);
 
           // Abmelden über den Link aus der Mail
           let abmeldung = null;
@@ -468,6 +474,8 @@
             pillen,
             vorOrtCls: opt(!online, vorOrtZu),
             onlineCls: opt(online, onlineZu),
+            vorOrtAn: gedrueckt(!online),
+            onlineAn: gedrueckt(online),
             vorOrtZu,
             onlineZu,
             waehleVorOrt: () => this.setzen({ ort: 'vorort' }),
@@ -476,6 +484,9 @@
             paypalCls: opt(w.zahlweg === 'paypal', false),
             barCls: opt(w.zahlweg === 'bar', online),
             wellpassCls: opt(w.zahlweg === 'wellpass', online),
+            paypalAn: gedrueckt(w.zahlweg === 'paypal'),
+            barAn: gedrueckt(w.zahlweg === 'bar'),
+            wellpassAn: gedrueckt(w.zahlweg === 'wellpass'),
             barZu: online,
             wellpassZu: online,
             waehlePaypal: () => this.setzen({ zahlweg: 'paypal' }),
